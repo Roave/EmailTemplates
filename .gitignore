@@ -1,0 +1,4 @@
+clover.xml
+build/
+vendor/
+composer.lock
