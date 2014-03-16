@@ -40,16 +40,19 @@
  */
 
 use Doctrine\ORM\EntityManager;
-use Roave\EmailTemplates\AbstractOptionsFactory;
+use Roave\EmailTemplates\Factory\AbstractOptionsFactory;
+use Roave\EmailTemplates\Factory\Repository\TemplateRepositoryFactory;
 use Roave\EmailTemplates\Factory\Service\EmailServiceFactory;
 use Roave\EmailTemplates\Factory\Service\Template\Engine\TwigEngineFactory;
 use Roave\EmailTemplates\Factory\Service\Template\EnginePluginManagerFactory;
+use Roave\EmailTemplates\Factory\Service\Template\Listener\UpdateTemplateParametersListenerFactory;
 use Roave\EmailTemplates\Factory\Service\TemplateServiceFactory;
 use Roave\EmailTemplates\Factory\Service\TransportFactory;
 use Roave\EmailTemplates\Hydrator\TemplateHydrator;
 use Roave\EmailTemplates\InputFilter\TemplateInputFilter;
 use Roave\EmailTemplates\Options\EmailServiceOptions;
 use Roave\EmailTemplates\Options\TemplateServiceOptions;
+use Roave\EmailTemplates\Repository\TemplateRepository;
 use Roave\EmailTemplates\Service\EmailService;
 use Roave\EmailTemplates\Service\Template\Engine\EchoResponse;
 use Roave\EmailTemplates\Service\Template\Engine\Twig;
@@ -93,15 +96,21 @@ return [
             'Roave\EmailTemplates\ObjectManager' => EntityManager::class
         ],
 
-        'invokables' => [
-            UpdateTemplateParametersListener::class => UpdateTemplateParametersListener::class
-        ],
-
         'factories' => [
+
+            // Repository
+            TemplateRepository::class => TemplateRepositoryFactory::class,
+
+            // Services
             EmailService::class        => EmailServiceFactory::class,
             TemplateService::class     => TemplateServiceFactory::class,
+
+            // Misc
             TransportInterface::class  => TransportFactory::class,
-            EnginePluginManager::class => EnginePluginManagerFactory::class
+            EnginePluginManager::class => EnginePluginManagerFactory::class,
+
+            // Listeners
+            UpdateTemplateParametersListener::class => UpdateTemplateParametersListenerFactory::class
         ],
 
         'abstract_factories' => [

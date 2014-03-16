@@ -59,19 +59,10 @@ class UpdateTemplateParametersListener implements ListenerAggregateInterface
     private $templateRepository;
 
     /**
-     * @var TemplateServiceInterface
-     */
-    private $templateService;
-
-    /**
-     * @param TemplateServiceInterface    $templateService
      * @param TemplateRepositoryInterface $templateRepository
      */
-    public function __construct(
-        TemplateServiceInterface $templateService,
-        TemplateRepositoryInterface $templateRepository
-    ) {
-        $this->templateService    = $templateService;
+    public function __construct(TemplateRepositoryInterface $templateRepository)
+    {
         $this->templateRepository = $templateRepository;
     }
 
@@ -100,6 +91,7 @@ class UpdateTemplateParametersListener implements ListenerAggregateInterface
          * @var array|\Traversable $parameters
          * @var TemplateServiceInterface $templateService
          */
+        $service    = $event->getTarget();
         $template   = $event->getParam('template');
         $parameters = $event->getParam('parameters');
 
@@ -111,7 +103,7 @@ class UpdateTemplateParametersListener implements ListenerAggregateInterface
         $templates = $this->templateRepository->getById($template->getId());
 
         foreach ($templates as $t) {
-            $this->templateService->update(['parameters' => $parameters, 'updateParams' => false], $t);
+            $service->update(['parameters' => $parameters, 'updateParams' => false], $t);
         }
     }
 }

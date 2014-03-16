@@ -5,8 +5,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                    https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-    <entity name="Roave\EmailTemplates\Entity\TemplateEntity" table="roave_email_templates"
-            repository-class="Roave\EmailTemplates\Repository\TemplateRepositoryFactory">
+    <entity name="Roave\EmailTemplates\Entity\TemplateEntity" table="roave_email_templates">
 
         <unique-constraints>
             <unique-constraint columns="id,locale"/>
@@ -14,9 +13,9 @@
 
         <id name="id" type="string"/>
 
-        <field name="updateParams" type="boolean" nullable="false"/>
+        <field name="updateParameters" type="boolean" nullable="false"/>
         <field name="locale" type="string" nullable="true"/>
-        <field name="params" type="array" nullable="true"/>
+        <field name="parameters" type="array" nullable="true"/>
         <field name="subject" type="string"/>
         <field name="textBody" type="text"/>
         <field name="htmlBody" type="text"/>

@@ -61,7 +61,7 @@ class EnginePluginManagerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $config = new Config($serviceLocator->get('Config')['Roave\EmailTemplates']['engine_manager']);
+        $config = new Config($serviceLocator->get('Config')['roave']['email_templates']['engine_manager']);
         return new EnginePluginManager($config);
     }
 }

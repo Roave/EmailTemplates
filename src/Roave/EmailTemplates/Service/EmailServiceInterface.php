@@ -50,8 +50,6 @@ interface EmailServiceInterface
      * @param array|\Traversable $params     A list of traversable parameters.
      * @param null               $locale     Which locale to send the email in.
      *
-     * @throws Exception\TemplateNotFoundException Is thrown when the template cannot be found.
-     *
      * @return void
      */
     public function send($email, $templateId, $params = [], $locale = null);
