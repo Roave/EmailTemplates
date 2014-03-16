@@ -1,5 +1,5 @@
 {
-  "name": "roave/email-templates",
+  "name": "roave/roave-email-templates",
   "description": "A component for handling email templates",
   "type": "module",
   "authors": [
