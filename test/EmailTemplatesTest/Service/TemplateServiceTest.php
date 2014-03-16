@@ -47,6 +47,7 @@ use Roave\EmailTemplates\Hydrator\TemplateHydrator;
 use Roave\EmailTemplates\InputFilter\TemplateInputFilter;
 use Roave\EmailTemplates\Options\TemplateServiceOptions;
 use Roave\EmailTemplates\Repository\TemplateRepositoryInterface;
+use Roave\EmailTemplates\Service\Template\Engine\EchoResponse;
 use Roave\EmailTemplates\Service\Template\Engine\EngineInterface;
 use Roave\EmailTemplates\Service\Template\EnginePluginManager;
 use Roave\EmailTemplates\Service\TemplateService;
@@ -171,5 +172,29 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->getMock(EngineInterface::class)));
 
         $this->templateService->render('helloWorld', 'en_US');
+    }
+
+    public function testRendersInProperOrder()
+    {
+        $template = new TemplateEntity();
+        $template->setSubject('subject');
+        $template->setTextBody('text');
+        $template->setHtmlBody('html');
+
+        $this->repository
+            ->expects($this->once())
+            ->method('getByIdAndLocale')
+            ->will($this->returnValue($template));
+
+        $this->engineManager
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(new EchoResponse()));
+
+        list ($subject, $html, $text) = $this->templateService->render('test', 'foo');
+
+        $this->assertEquals($template->getSubject(), $subject);
+        $this->assertEquals($template->getHtmlBody(), $html);
+        $this->assertEquals($template->getTextBody(), $text);
     }
 }
