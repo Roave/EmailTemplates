@@ -40,7 +40,7 @@
 
 namespace Roave\EmailTemplates\Service\Template;
 
-use Roave\EmailTemplates\ServiceFactory\Template\Engine\TwigEngineFactory;
+use Roave\EmailTemplates\Service\Template\Engine\EngineInterface;
 use Zend\ServiceManager\AbstractPluginManager;
 
 class EnginePluginManager extends AbstractPluginManager
@@ -66,7 +66,7 @@ class EnginePluginManager extends AbstractPluginManager
         }
 
         throw new Exception\InvalidEngineException(sprintf(
-            'Plugin of type %s is invalid; must implement %s\Helper\HelperInterface',
+            'Plugin of type %s is invalid; must implement %s\Engine\EngineInterface',
             (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
             __NAMESPACE__
         ));
