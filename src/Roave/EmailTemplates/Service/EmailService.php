@@ -108,10 +108,7 @@ class EmailService implements EmailServiceInterface
         list ($subject, $text, $html) = $this->templates->render($templateId, $locale, $params);
 
         $message = new MailMessage();
-
-        /** @var ContentType $header */
-        $header = $message->getHeaders()->get('Content-Type');
-        $header->setType('multipart/alternative');
+        $message->getHeaders()->addHeaderLine('Content-Type', 'multipart/alternative');
 
         $htmlPart = new MimePart($html);
         $htmlPart->type = 'text/html';
