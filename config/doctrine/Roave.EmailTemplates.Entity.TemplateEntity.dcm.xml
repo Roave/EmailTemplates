@@ -7,14 +7,10 @@
 
     <entity name="Roave\EmailTemplates\Entity\TemplateEntity" table="roave_email_templates">
 
-        <unique-constraints>
-            <unique-constraint columns="id,locale"/>
-        </unique-constraints>
-
-        <id name="id" type="string"/>
+        <id name="id"     type="string"/>
+        <id name="locale" type="string"/>
 
         <field name="updateParameters" type="boolean" nullable="false"/>
-        <field name="locale" type="string" nullable="true"/>
         <field name="parameters" type="array" nullable="true"/>
         <field name="subject" type="string"/>
         <field name="textBody" type="text"/>
