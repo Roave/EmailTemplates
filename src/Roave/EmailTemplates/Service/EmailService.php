@@ -105,7 +105,7 @@ class EmailService implements EmailServiceInterface
         $params = ArrayUtils::iteratorToArray($params);
         $locale = $locale ?: $this->options->getDefaultLocale();
 
-        list ($subject, $text, $html) = $this->templates->render($templateId, $locale, $params);
+        list ($subject, $html, $text) = $this->templates->render($templateId, $locale, $params);
 
         $message = new MailMessage();
         $message->getHeaders()->addHeaderLine('Content-Type', 'multipart/alternative');
