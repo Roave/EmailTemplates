@@ -70,7 +70,7 @@ class TemplateRepository implements TemplateRepositoryInterface
      */
     public function getById($id)
     {
-        return $this->objectRepository->find($id);
+        return $this->objectRepository->findBy(['id' => $id]);
     }
 
     /**
