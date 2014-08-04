@@ -67,6 +67,7 @@ class TemplateHydrator extends AbstractHydrator
             'textBody'         => $this->extractValue('textBody', $object->getTextBody()),
             'htmlBody'         => $this->extractValue('htmlBody', $object->getHtmlBody()),
             'description'      => $this->extractValue('description', $object->getDescription()),
+            'parameters'       => $this->extractValue('parameters', $object->getParameters()),
             'updateParameters' => $this->extractValue('updateParameters', $object->getUpdateParameters()),
 
             // Dates
