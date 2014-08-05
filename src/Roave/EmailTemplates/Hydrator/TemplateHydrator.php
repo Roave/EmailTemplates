@@ -92,7 +92,7 @@ class TemplateHydrator extends AbstractHydrator
     {
         if (! $object instanceof TemplateEntity) {
             throw new Exception\InvalidArgumentException(sprintf(
-                'Object must be an instance of %s', 
+                'Object must be an instance of %s',
                 TemplateEntity::class
             ));
         }
