@@ -56,6 +56,11 @@ class TemplateEntity
     protected $id;
 
     /**
+     * @var string
+     */
+    protected $uuid;
+
+    /**
      * If the example parameters should be updated the next time it's used.
      *
      * @var bool
@@ -127,6 +132,22 @@ class TemplateEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @param string $uuid
+     */
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
     }
 
     /**

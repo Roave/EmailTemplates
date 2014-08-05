@@ -62,6 +62,7 @@ class TemplateHydrator extends AbstractHydrator
 
         return [
             'id'               => $this->extractValue('id', $object->getId()),
+            'uuid'             => $this->extractValue('uuid', $object->getUUID()),
             'locale'           => $this->extractValue('locale', $object->getLocale()),
             'subject'          => $this->extractValue('subject', $object->getSubject()),
             'textBody'         => $this->extractValue('textBody', $object->getTextBody()),

@@ -49,15 +49,6 @@ class TemplateInputFilter extends InputFilter
     public function init()
     {
         $this->add([
-            'name'    => 'enabled',
-            'filters' => [
-                [
-                    'name' => Boolean::class
-                ]
-            ]
-        ]);
-
-        $this->add([
             'name'    => 'updateParameters',
             'filters' => [
                 [
@@ -75,7 +66,6 @@ class TemplateInputFilter extends InputFilter
             'validators' => [
 
             ],
-
             'filters' => [
                 [
                     'name' => StringTrim::class

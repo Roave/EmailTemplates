@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                    https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
     <entity name="Roave\EmailTemplates\Entity\TemplateEntity" table="roave_email_templates">
 
-        <id name="id"     type="string"/>
-        <id name="locale" type="string"/>
+        <id name="uuid" type="string">
+            <generator strategy="UUID"/>
+        </id>
+
+        <unique-constraints>
+            <unique-constraint columns="id,locale" />
+        </unique-constraints>
+
+        <field name="id"     type="string"/>
+        <field name="locale" type="string"/>
 
         <field name="updateParameters" type="boolean" nullable="false"/>
         <field name="parameters" type="array" nullable="true"/>
