@@ -57,7 +57,10 @@ class TemplateHydrator extends AbstractHydrator
     public function extract($object)
     {
         if (! $object instanceof TemplateEntity) {
-            throw new Exception\InvalidArgumentException();
+            throw new Exception\InvalidArgumentException(sprintf(
+                'Object must be an instance of %s',
+                TemplateEntity::class
+            ));
         }
 
         return [
