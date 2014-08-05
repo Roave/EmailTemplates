@@ -7,7 +7,6 @@ tools:
         test_command: ./vendor/bin/phpunit -c phpunit.xml.dist
     php_code_sniffer:
         enabled: true
-        command: ./vendor/bin/phpcs
         config:
             standard: PSR2
         filter:
