@@ -91,7 +91,10 @@ class TemplateHydrator extends AbstractHydrator
     public function hydrate(array $data, $object)
     {
         if (! $object instanceof TemplateEntity) {
-            throw new Exception\InvalidArgumentException();
+            throw new Exception\InvalidArgumentException(sprintf(
+                'Object must be an instance of %s',
+                TemplateEntity::class
+            ));
         }
 
         $object->setLocale($this->hydrateValue('locale', $data['locale']));
