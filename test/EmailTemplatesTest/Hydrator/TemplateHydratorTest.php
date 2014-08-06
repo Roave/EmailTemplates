@@ -45,7 +45,7 @@ class TemplateHydratorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::hydrate
+     * @covers ::extract
      */
     public function testExtractThrowsInvalidArgumentException()
     {
