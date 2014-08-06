@@ -51,6 +51,10 @@ use Twig_Loader_String;
  */
 class Twig implements EngineInterface
 {
+    /**
+     * @var Twig_Environment
+     */
+    protected $twig;
 
     /**
      * Constructs a twig engine from the given options
@@ -68,7 +72,7 @@ class Twig implements EngineInterface
     /**
      * @inheritdoc
      */
-    public function render($template, array $params = array())
+    public function render($template, array $params = [])
     {
         return $this->twig->render($template, $params);
     }
