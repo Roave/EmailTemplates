@@ -88,7 +88,7 @@ class UpdateTemplateParametersListenerTest extends PHPUnit_Framework_TestCase
         $events
             ->expects($this->once())
             ->method('attach')
-            ->with(TemplateService::EVENT_RENDER, $this->template, [$this->template, 'update']);
+            ->with(TemplateService::EVENT_RENDER, [$this->template, 'update']);
 
         $this->template->attach($events);
     }
