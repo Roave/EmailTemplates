@@ -56,6 +56,13 @@ use Roave\EmailTemplates\Service\Template\EnginePluginManager;
 use Roave\EmailTemplates\Service\TemplateService;
 use Zend\EventManager\EventManagerInterface;
 
+/**
+ * Class TemplateServiceTest
+ *
+ * @coversDefaultClass \Roave\EmailTemplates\Service\TemplateService
+ *
+ * @group service
+ */
 class TemplateServiceTest extends PHPUnit_Framework_TestCase
 {
 
@@ -121,6 +128,9 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
         $this->templateService->setEventManager($this->eventManager);
     }
 
+    /**
+     * @covers ::render
+     */
     public function testRenderCreateIfTemplateMissing()
     {
         $this->repository
@@ -139,6 +149,9 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
         $this->templateService->render('helloWorld', 'en_US');
     }
 
+    /**
+     * @covers ::render
+     */
     public function testRenderTriggersEvent()
     {
         $this->repository
@@ -159,6 +172,9 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
         $this->templateService->render('helloWorld', 'en_US');
     }
 
+    /**
+     * @covers ::render
+     */
     public function testCreateTriggersEvent()
     {
         $this->repository
@@ -178,6 +194,9 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
         $this->templateService->render('helloWorld', 'en_US');
     }
 
+    /**
+     * @covers ::render
+     */
     public function testRendersInProperOrder()
     {
         $template = new TemplateEntity();
@@ -202,6 +221,9 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($template->getTextBody(), $text);
     }
 
+    /**
+     * @covers ::update
+     */
     public function testUpdateWithIncorrectData()
     {
         $this->setExpectedException(FailedDataValidationException::class);
@@ -220,6 +242,9 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
         $this->templateService->update([], new TemplateEntity());
     }
 
+    /**
+     * @covers ::update
+     */
     public function testUpdate()
     {
         $data     = ['foo' => 'bar'];
