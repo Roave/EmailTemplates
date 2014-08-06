@@ -43,6 +43,14 @@ namespace EmailTemplatesTest\Factory;
 use Roave\EmailTemplates\Factory\AbstractOptionsFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Class AbstractOptionsFactoryTest
+ *
+ * @coversDefaultClass \Roave\EmailTemplates\Factory\AbstractOptionsFactory
+ * @covers ::<!public>
+ *
+ * @group factory
+ */
 class AbstractOptionsFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
