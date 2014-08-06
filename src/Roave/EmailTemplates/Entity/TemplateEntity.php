@@ -41,7 +41,6 @@
 namespace Roave\EmailTemplates\Entity;
 
 use DateTime;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Class TemplateEntity
