@@ -15,6 +15,7 @@ use stdClass;
  * Class TemplateHydratorTest
  *
  * @coversDefaultClass \Roave\EmailTemplates\Hydrator\TemplateHydrator
+ * @covers ::<!public>
  *
  * @group unit
  */
