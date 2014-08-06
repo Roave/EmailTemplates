@@ -47,7 +47,10 @@ use Zend\Validator\NotEmpty;
 /**
  * Class TemplateInputFilterTest
  *
+ * @coversDefaultClass \Roave\EmailTemplates\InputFilter\TemplateInputFilter
+ * @covers ::<!public>
  *
+ * @group inputFilter
  */
 class TemplateInputFilterTest extends PHPUnit_Framework_TestCase
 {
@@ -56,6 +59,9 @@ class TemplateInputFilterTest extends PHPUnit_Framework_TestCase
      */
     protected $inputFilter;
 
+    /**
+     * @covers ::init
+     */
     protected function setUp()
     {
         $this->inputFilter = new TemplateInputFilter();

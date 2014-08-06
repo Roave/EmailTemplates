@@ -48,10 +48,10 @@ use Roave\EmailTemplates\Options\Template\Engine\TwigOptions;
  * Class TwigOptionsTest
  *
  * @coversDefaultClass \Roave\EmailTemplates\Options\Template\Engine\TwigOptions
+ * @covers ::<!public>
  */
 class TwigOptionsTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @var TwigOptions
      */
@@ -68,30 +68,33 @@ class TwigOptionsTest extends PHPUnit_Framework_TestCase
      */
     public function testSetGetAutoescape()
     {
-        $this->assertEquals('html',$this->options->getAutoescape());
+        $this->assertEquals('html', $this->options->getAutoescape());
         $this->options->setAutoescape('text');
         $this->assertEquals('text', $this->options->getAutoescape());
     }
+
     /**
      * @covers ::setCache
      * @covers ::getCache
      */
     public function testSetGetCache()
     {
-        $this->assertEquals('data/cache/twig',$this->options->getCache());
+        $this->assertEquals('data/cache/twig', $this->options->getCache());
         $this->options->setCache('foobar');
         $this->assertEquals('foobar', $this->options->getCache());
     }
+
     /**
      * @covers ::setCharset
      * @covers ::getCharset
      */
     public function testSetGetCharset()
     {
-        $this->assertEquals('utf8',$this->options->getCharset());
+        $this->assertEquals('utf8', $this->options->getCharset());
         $this->options->setCharset('barfoo');
         $this->assertEquals('barfoo', $this->options->getCharset());
     }
+
     /**
      * @covers ::setDebug
      * @covers ::getDebug

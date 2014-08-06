@@ -43,17 +43,18 @@ namespace EmailTemplatesTest\Service\Template\Engine;
 
 
 use PHPUnit_Framework_TestCase;
-use Roave\EmailTemplates\Entity\TemplateEntity;
 use Roave\EmailTemplates\Service\Template\Engine\EchoResponse;
 
 /**
  * Class EchoResponseTest
  *
  * @coversDefaultClass \Roave\EmailTemplates\Service\Template\Engine\EchoResponse
+ * @covers ::<!public>
+ *
+ * @group service
  */
 class EchoResponseTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @var EchoResponse
      */
@@ -69,7 +70,6 @@ class EchoResponseTest extends PHPUnit_Framework_TestCase
      */
     public function testRender()
     {
-        $template = new TemplateEntity();
-        $this->assertSame($template, $this->response->render($template, []));
+        $this->assertSame('roaveIsAwesome', $this->response->render('roaveIsAwesome', ['some' => 'params']));
     }
 }

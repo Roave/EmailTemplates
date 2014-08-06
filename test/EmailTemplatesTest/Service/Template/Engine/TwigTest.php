@@ -42,7 +42,6 @@ namespace EmailTemplatesTest\Service\Template\Engine;
 
 
 use PHPUnit_Framework_TestCase;
-use Roave\EmailTemplates\Entity\TemplateEntity;
 use Roave\EmailTemplates\Options\Template\Engine\TwigOptions;
 use Roave\EmailTemplates\Service\Template\Engine\Twig;
 
@@ -50,10 +49,12 @@ use Roave\EmailTemplates\Service\Template\Engine\Twig;
  * Class TwigTest
  *
  * @coversDefaultClass \Roave\EmailTemplates\Service\Template\Engine\Twig
+ * @covers ::<!public>
+ *
+ * @group service
  */
 class TwigTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @var Twig
      */
@@ -62,7 +63,7 @@ class TwigTest extends PHPUnit_Framework_TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-   protected  $options;
+    protected $options;
 
     /**
      * @covers ::__construct
@@ -70,7 +71,7 @@ class TwigTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->options = new TwigOptions();
-        $this->twig = new Twig($this->options);
+        $this->twig    = new Twig($this->options);
     }
 
     /**
@@ -87,4 +88,4 @@ class TwigTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($expectedResponse, $this->twig->render($template, $params));
     }
-} 
+}

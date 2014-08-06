@@ -83,6 +83,7 @@ class EmailServiceOptionsTest extends PHPUnit_Framework_TestCase
         $this->options->setBcc(['test' => '42']);
         $this->assertEquals(['test' => '42'], $this->options->getBcc());
     }
+
     /**
      * @covers ::setDefaultTransport
      * @covers ::getDefaultTransport
@@ -93,6 +94,7 @@ class EmailServiceOptionsTest extends PHPUnit_Framework_TestCase
         $this->options->setDefaultTransport('NotSendMail');
         $this->assertEquals('NotSendMail', $this->options->getDefaultTransport());
     }
+
     /**
      * @covers ::setEncoding
      * @covers ::getEncoding
@@ -103,6 +105,7 @@ class EmailServiceOptionsTest extends PHPUnit_Framework_TestCase
         $this->options->setEncoding('utf-1337');
         $this->assertEquals('utf-1337', $this->options->getEncoding());
     }
+
     /**
      * @covers ::setFrom
      * @covers ::getFrom
@@ -113,6 +116,7 @@ class EmailServiceOptionsTest extends PHPUnit_Framework_TestCase
         $this->options->setFrom('leetmaster@localhost');
         $this->assertEquals('leetmaster@localhost', $this->options->getFrom());
     }
+
     /**
      * @covers ::setReplyTo
      * @covers ::getReplyTo

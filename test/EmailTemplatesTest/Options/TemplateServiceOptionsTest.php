@@ -57,7 +57,7 @@ class TemplateServiceOptionsTest extends PHPUnit_Framework_TestCase
      */
     protected $options;
 
-    public function setUP()
+    public function setUp()
     {
         $this->options = new TemplateServiceOptions();
     }
@@ -73,6 +73,10 @@ class TemplateServiceOptionsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('A new, bit thinner body', $this->options->getDefaultBody());
     }
 
+    /**
+     * @covers ::getDefaultSubject
+     * @covers ::setDefaultSubject
+     */
     public function testSetGetDefaultSubject()
     {
         $this->assertEquals('Subject has not yet been set', $this->options->getDefaultSubject());
@@ -80,6 +84,10 @@ class TemplateServiceOptionsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Subject has been set', $this->options->getDefaultSubject());
     }
 
+    /**
+     * @covers ::setEngine
+     * @covers ::getEngine
+     */
     public function testSetGetEngine()
     {
         $this->assertEquals('twig', $this->options->getEngine());
