@@ -32,21 +32,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
 namespace EmailTemplatesTest\Service;
 
+use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Tests\Common\Annotations\Fixtures\Annotation\Template;
 use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\Entity\TemplateEntity;
 use Roave\EmailTemplates\Hydrator\TemplateHydrator;
 use Roave\EmailTemplates\InputFilter\TemplateInputFilter;
 use Roave\EmailTemplates\Options\TemplateServiceOptions;
 use Roave\EmailTemplates\Repository\TemplateRepositoryInterface;
+use Roave\EmailTemplates\Service\Exception\FailedDataValidationException;
 use Roave\EmailTemplates\Service\Template\Engine\EchoResponse;
 use Roave\EmailTemplates\Service\Template\Engine\EngineInterface;
 use Roave\EmailTemplates\Service\Template\EnginePluginManager;
@@ -55,6 +58,7 @@ use Zend\EventManager\EventManagerInterface;
 
 class TemplateServiceTest extends PHPUnit_Framework_TestCase
 {
+
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -196,5 +200,59 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($template->getSubject(), $subject);
         $this->assertEquals($template->getHtmlBody(), $html);
         $this->assertEquals($template->getTextBody(), $text);
+    }
+
+    public function testUpdateWithIncorrectData()
+    {
+        $this->setExpectedException(FailedDataValidationException::class);
+
+        $this->hydrator
+            ->expects($this->once())
+            ->method('extract')
+            ->will($this->returnValue([]));
+
+
+        $this->inputFilter
+            ->expects($this->once())
+            ->method('getMessages')
+            ->will($this->returnValue([]));
+
+        $this->templateService->update([], new TemplateEntity());
+    }
+
+    public function testUpdate()
+    {
+        $data     = ['foo' => 'bar'];
+        $template = $this->getMock(TemplateEntity::class);
+        $template
+            ->expects($this->once())
+            ->method('setUpdatedAt')
+            ->with($this->isInstanceOf(DateTime::class));
+
+        $this->hydrator
+            ->expects($this->once())
+            ->method('extract')
+            ->will($this->returnValue([]));
+
+        $this->inputFilter
+            ->expects($this->once())
+            ->method('isValid')
+            ->will($this->returnValue(true));
+
+        $this->inputFilter
+            ->expects($this->once())
+            ->method('getValues')
+            ->will($this->returnValue($data));
+
+        $this->hydrator
+            ->expects($this->once())
+            ->method('hydrate')
+            ->with($data, $template);
+
+        $this->objectManager
+            ->expects($this->once())
+            ->method('flush');
+
+        $this->templateService->update($data, $template);
     }
 }
