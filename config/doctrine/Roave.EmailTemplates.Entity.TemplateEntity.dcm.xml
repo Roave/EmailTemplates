@@ -27,6 +27,6 @@
         <!-- Dates -->
         <field name="createdAt" type="datetime"/>
         <field name="updatedAt" type="datetime"/>
-        <field name="paramsUpdatedAt" type="datetime" nullable="true"/>
+        <field name="parametersUpdatedAt" type="datetime" nullable="true"/>
     </entity>
 </doctrine-mapping>

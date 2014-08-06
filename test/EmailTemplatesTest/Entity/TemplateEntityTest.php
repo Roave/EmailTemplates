@@ -48,7 +48,8 @@ use Roave\EmailTemplates\Entity\TemplateEntity;
 /**
  * Class TemplateEntityTest
  *
- * @covers \Roave\EmailTemplates\Entity\TemplateEntity::<!public>
+ * @coversDefaultClass \Roave\EmailTemplates\Entity\TemplateEntity
+ * @covers ::<!public>
  *
  * @group entity
  */
@@ -64,6 +65,10 @@ class TemplateEntityTest extends PHPUnit_Framework_TestCase
         $this->template = new TemplateEntity();
     }
 
+    /**
+     * @covers ::setId
+     * @covers ::getId
+     */
     public function testSetGetId()
     {
         $this->assertEmpty($this->template->getId());
@@ -71,6 +76,10 @@ class TemplateEntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->template->getId());
     }
 
+    /**
+     * @covers ::setUuid
+     * @covers ::getUuid
+     */
     public function testSetGetUuid()
     {
         $this->assertEmpty($this->template->getUuid());
@@ -78,6 +87,10 @@ class TemplateEntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->template->getUuid());
     }
 
+    /**
+     * @covers ::setLocale
+     * @covers ::getLocale
+     */
     public function testSetGetLocale()
     {
         $this->assertEmpty($this->template->getLocale());
@@ -85,6 +98,10 @@ class TemplateEntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('en-US', $this->template->getLocale());
     }
 
+    /**
+     * @covers ::getTextBody
+     * @covers ::setTextBody
+     */
     public function testSetGetTextBody()
     {
         $this->assertEmpty($this->template->getTextBody());
@@ -92,6 +109,10 @@ class TemplateEntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Foobar', $this->template->getTextBody());
     }
 
+    /**
+     * @covers ::getHtmlBody
+     * @covers ::setHtmlBody
+     */
     public function testSetGetHtmlBody()
     {
         $this->assertEmpty($this->template->getHtmlBody());
@@ -99,6 +120,10 @@ class TemplateEntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('f00bar', $this->template->getHtmlBody());
     }
 
+    /**
+     * @covers ::setParameters
+     * @covers ::getParameters
+     */
     public function testSetGetParameters()
     {
         $this->assertEmpty($this->template->getParameters());
@@ -106,6 +131,10 @@ class TemplateEntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(['foo' => 'bar'], $this->template->getParameters());
     }
 
+    /**
+     * @covers ::getSubject
+     * @covers ::setSubject
+     */
     public function testSetGetSubject()
     {
         $this->assertEmpty($this->template->getSubject());
@@ -113,6 +142,10 @@ class TemplateEntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Foobar', $this->template->getSubject());
     }
 
+    /**
+     * @covers ::getDescription
+     * @covers ::setDescription
+     */
     public function testSetGetDescription()
     {
         $this->assertEmpty($this->template->getDescription());
@@ -120,14 +153,22 @@ class TemplateEntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $this->template->getDescription());
     }
 
+    /**
+     * @covers ::setParametersUpdatedAt
+     * @covers ::getParametersUpdatedAt
+     */
     public function testSetGetParamsUpdatedAt()
     {
         $date = new DateTime();
-        $this->assertNull($this->template->getParamsUpdatedAt());
-        $this->template->setParamsUpdatedAt($date);
-        $this->assertEquals($date, $this->template->getParamsUpdatedAt());
+        $this->assertNull($this->template->getParametersUpdatedAt());
+        $this->template->setParametersUpdatedAt($date);
+        $this->assertEquals($date, $this->template->getParametersUpdatedAt());
     }
 
+    /**
+     * @covers ::setUpdateParameters
+     * @covers ::getUpdateParameters
+     */
     public function testSetGetUpdateParameters()
     {
         $this->assertFalse($this->template->getUpdateParameters());
@@ -135,6 +176,10 @@ class TemplateEntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(true, $this->template->getUpdateParameters());
     }
 
+    /**
+     * @covers ::getCreatedAt
+     * @covers ::setCreatedAt
+     */
     public function testSetGetCreatedAt()
     {
         $date = new DateTime();
@@ -143,6 +188,10 @@ class TemplateEntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($date, $this->template->getCreatedAt());
     }
 
+    /**
+     * @covers ::getUpdatedAt
+     * @covers ::setUpdatedAt
+     */
     public function testSetGetUpdatedAt()
     {
         $date = new DateTime();

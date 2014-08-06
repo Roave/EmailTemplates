@@ -105,7 +105,7 @@ class TemplateEntity
      *
      * @var \DateTime|null
      */
-    protected $paramsUpdatedAt;
+    protected $parametersUpdatedAt;
 
     /**
      * @var DateTime|null
@@ -248,17 +248,17 @@ class TemplateEntity
     /**
      * @param \DateTime|null $paramsUpdatedAt
      */
-    public function setParamsUpdatedAt(DateTime $paramsUpdatedAt = null)
+    public function setParametersUpdatedAt(DateTime $paramsUpdatedAt = null)
     {
-        $this->paramsUpdatedAt = $paramsUpdatedAt;
+        $this->parametersUpdatedAt = $paramsUpdatedAt;
     }
 
     /**
      * @return \DateTime|null
      */
-    public function getParamsUpdatedAt()
+    public function getParametersUpdatedAt()
     {
-        return $this->paramsUpdatedAt;
+        return $this->parametersUpdatedAt;
     }
 
     /**
