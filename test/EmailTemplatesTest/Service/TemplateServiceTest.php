@@ -42,7 +42,6 @@ namespace EmailTemplatesTest\Service;
 
 use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Tests\Common\Annotations\Fixtures\Annotation\Template;
 use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\Entity\TemplateEntity;
 use Roave\EmailTemplates\Hydrator\TemplateHydrator;
@@ -50,7 +49,6 @@ use Roave\EmailTemplates\InputFilter\TemplateInputFilter;
 use Roave\EmailTemplates\Options\TemplateServiceOptions;
 use Roave\EmailTemplates\Repository\TemplateRepositoryInterface;
 use Roave\EmailTemplates\Service\Exception\FailedDataValidationException;
-use Roave\EmailTemplates\Service\Template\Engine\EchoResponse;
 use Roave\EmailTemplates\Service\Template\Engine\EngineInterface;
 use Roave\EmailTemplates\Service\Template\EnginePluginManager;
 use Roave\EmailTemplates\Service\TemplateService;
@@ -60,6 +58,7 @@ use Zend\EventManager\EventManagerInterface;
  * Class TemplateServiceTest
  *
  * @coversDefaultClass \Roave\EmailTemplates\Service\TemplateService
+ * @covers ::<!public>
  *
  * @group service
  */
@@ -106,6 +105,9 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
      */
     protected $templateService;
 
+    /**
+     * @covers ::__construct
+     */
     protected function setUp()
     {
         $this->objectManager = $this->getMock(ObjectManager::class);
@@ -131,95 +133,138 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
     /**
      * @covers ::render
      */
-    public function testRenderCreateIfTemplateMissing()
+    public function testRender()
     {
-        $this->repository
-            ->expects($this->once())
-            ->method('getByIdAndLocale');
+        $locale     = 'sv_SE';
+        $templateId = 'test:template:id';
+        $parameters = ['company' => 'Roave'];
 
-        $this->objectManager
-            ->expects($this->once())
-            ->method('persist');
-
-        $this->engineManager
-            ->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($this->getMock(EngineInterface::class)));
-
-        $this->templateService->render('helloWorld', 'en_US');
-    }
-
-    /**
-     * @covers ::render
-     */
-    public function testRenderTriggersEvent()
-    {
-        $this->repository
-            ->expects($this->once())
-            ->method('getByIdAndLocale')
-            ->will($this->returnValue(new TemplateEntity()));
-
-        $this->eventManager
-            ->expects($this->once())
-            ->method('trigger')
-            ->with(TemplateService::EVENT_RENDER, $this->templateService);
-
-        $this->engineManager
-            ->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($this->getMock(EngineInterface::class)));
-
-        $this->templateService->render('helloWorld', 'en_US');
-    }
-
-    /**
-     * @covers ::render
-     */
-    public function testCreateTriggersEvent()
-    {
-        $this->repository
-            ->expects($this->once())
-            ->method('getByIdAndLocale');
-
-        $this->eventManager
-            ->expects($this->at(0))
-            ->method('trigger')
-            ->with(TemplateService::EVENT_CREATE, $this->templateService);
-
-        $this->engineManager
-            ->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($this->getMock(EngineInterface::class)));
-
-        $this->templateService->render('helloWorld', 'en_US');
-    }
-
-    /**
-     * @covers ::render
-     */
-    public function testRendersInProperOrder()
-    {
         $template = new TemplateEntity();
         $template->setSubject('subject');
         $template->setTextBody('text');
         $template->setHtmlBody('html');
 
+        $engine = $this->getMock(EngineInterface::class);
+
+        // First run is the subject
+        $engine
+            ->expects($this->at(0))
+            ->method('render')
+            ->with($template->getSubject(), $parameters)
+            ->will($this->returnValue($template->getSubject()));
+
+        // Second run is the html body
+        $engine
+            ->expects($this->at(1))
+            ->method('render')
+            ->with($template->getHtmlBody(), $parameters)
+            ->will($this->returnValue($template->getHtmlBody()));
+
+        // Third run is the text body
+        $engine
+            ->expects($this->at(2))
+            ->method('render')
+            ->with($template->getTextBody(), $parameters)
+            ->will($this->returnValue($template->getTextBody()));
+
         $this->repository
             ->expects($this->once())
             ->method('getByIdAndLocale')
+            ->with($templateId, $locale)
             ->will($this->returnValue($template));
+
+        $this->eventManager
+            ->expects($this->once())
+            ->method('trigger')
+            ->with(
+                TemplateService::EVENT_RENDER,
+                $this->templateService,
+                [
+                    'template'   => $template,
+                    'parameters' => $parameters
+                ]
+            );
 
         $this->engineManager
             ->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(new EchoResponse()));
+            ->will($this->returnValue($engine));
 
-        list ($subject, $html, $text) = $this->templateService->render('test', 'foo');
+        list ($subject, $html, $text) = $this->templateService->render($templateId, $locale, $parameters);
 
         $this->assertEquals($template->getSubject(), $subject);
         $this->assertEquals($template->getHtmlBody(), $html);
         $this->assertEquals($template->getTextBody(), $text);
     }
+
+    /**
+     * @covers ::render
+     * @covers ::create
+     */
+    public function testRenderWithMissingTemplate()
+    {
+        $locale     = 'sv_SE';
+        $templateId = 'test:template:id';
+        $parameters = ['company' => 'Roave'];
+
+        $template = new TemplateEntity();
+        $template->setSubject($this->options->getDefaultSubject());
+        $template->setTextBody(sprintf($this->options->getDefaultBody(), $templateId, $locale));
+        $template->setHtmlBody(sprintf($this->options->getDefaultBody(), $templateId, $locale));
+
+        $engine = $this->getMock(EngineInterface::class);
+
+        // First run is the subject
+        $engine
+            ->expects($this->at(0))
+            ->method('render')
+            ->with($template->getSubject(), $parameters)
+            ->will($this->returnValue($template->getSubject()));
+
+        // Second run is the html body
+        $engine
+            ->expects($this->at(1))
+            ->method('render')
+            ->with($template->getHtmlBody(), $parameters)
+            ->will($this->returnValue($template->getHtmlBody()));
+
+        // Third run is the text body
+        $engine
+            ->expects($this->at(2))
+            ->method('render')
+            ->with($template->getTextBody(), $parameters)
+            ->will($this->returnValue($template->getTextBody()));
+
+        $this->repository
+            ->expects($this->once())
+            ->method('getByIdAndLocale')
+            ->with($templateId, $locale)
+            ->will($this->returnValue(null));
+
+        $this->eventManager
+            ->expects($this->at(0))
+            ->method('trigger')
+            ->with(TemplateService::EVENT_CREATE, $this->templateService, $this->callback(function ($parameters) {
+                return ($parameters['template'] instanceof TemplateEntity);
+            }));
+
+        $this->eventManager
+            ->expects($this->at(1))
+            ->method('trigger')
+            ->with(TemplateService::EVENT_RENDER);
+
+        $this->engineManager
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($engine));
+
+        list ($subject, $html, $text) = $this->templateService->render($templateId, $locale, $parameters);
+
+        $this->assertEquals($template->getSubject(), $subject);
+        $this->assertEquals($template->getHtmlBody(), $html);
+        $this->assertEquals($template->getTextBody(), $text);
+    }
+
 
     /**
      * @covers ::update
@@ -232,7 +277,6 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('extract')
             ->will($this->returnValue([]));
-
 
         $this->inputFilter
             ->expects($this->once())

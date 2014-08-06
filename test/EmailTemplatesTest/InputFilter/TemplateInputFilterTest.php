@@ -62,6 +62,11 @@ class TemplateInputFilterTest extends PHPUnit_Framework_TestCase
         $this->inputFilter->init();
     }
 
+    /**
+     * Data provider for {@see testValidationOfEachProperty}
+     *
+     * @return array
+     */
     public function propertyValidationData()
     {
         return [
