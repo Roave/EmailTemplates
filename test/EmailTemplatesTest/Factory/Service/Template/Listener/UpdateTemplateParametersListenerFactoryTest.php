@@ -78,7 +78,7 @@ class UpdateTemplateParametersListenerFactoryTest extends PHPUnit_Framework_Test
     {
         $sl = $this->getMock(ServiceLocatorInterface::class);
         $sl
-            ->expects($this->once())
+            ->expects($this->at(0))
             ->method('get')
             ->with(TemplateRepository::class)
             ->will($this->returnValue($this->getMock(TemplateRepositoryInterface::class)));
