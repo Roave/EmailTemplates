@@ -41,7 +41,6 @@
 
 namespace EmailTemplatesTest\Factory\Service;
 
-
 use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\Factory\Service\EmailServiceFactory;
 use Roave\EmailTemplates\Options\EmailServiceOptions;
@@ -57,6 +56,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * @coversDefaultClass \Roave\EmailTemplates\Factory\Service\EmailServiceFactory
  * @covers ::<!public>
  *
+ * @group factory
  */
 class EmailServiceFactoryTest extends PHPUnit_Framework_TestCase
 {
@@ -95,6 +95,6 @@ class EmailServiceFactoryTest extends PHPUnit_Framework_TestCase
             ->with(TransportInterface::class)
             ->will($this->returnValue($transport));
 
-      $this->assertInstanceOf(EmailService::class, $this->factory->createService($sl));
+        $this->assertInstanceOf(EmailService::class, $this->factory->createService($sl));
     }
-} 
+}

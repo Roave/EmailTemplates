@@ -49,6 +49,9 @@ use Roave\EmailTemplates\Options\TemplateServiceOptions;
  * Class TemplateServiceOptionsTest
  *
  * @coversDefaultClass \Roave\EmailTemplates\Options\TemplateServiceOptions
+ * @covers ::<!public>
+ *
+ * @group options
  */
 class TemplateServiceOptionsTest extends PHPUnit_Framework_TestCase
 {

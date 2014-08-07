@@ -49,6 +49,8 @@ use Roave\EmailTemplates\Options\Template\Engine\TwigOptions;
  *
  * @coversDefaultClass \Roave\EmailTemplates\Options\Template\Engine\TwigOptions
  * @covers ::<!public>
+ *
+ * @group options
  */
 class TwigOptionsTest extends PHPUnit_Framework_TestCase
 {
@@ -57,7 +59,7 @@ class TwigOptionsTest extends PHPUnit_Framework_TestCase
      */
     protected $options;
 
-    public function setUP()
+    public function setUp()
     {
         $this->options = new TwigOptions();
     }

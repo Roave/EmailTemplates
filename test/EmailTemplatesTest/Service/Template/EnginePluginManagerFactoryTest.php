@@ -44,7 +44,6 @@ namespace EmailTemplatesTest\Service\Template;
 use Roave\EmailTemplates\Factory\Service\Template\EnginePluginManagerFactory;
 use Roave\EmailTemplates\Service\Template\Engine\EchoResponse;
 use Roave\EmailTemplates\Service\Template\EnginePluginManager;
-use Zend\ServiceManager\Config;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
@@ -52,11 +51,11 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @coversDefaultClass \Roave\EmailTemplates\Factory\Service\Template\EnginePluginManagerFactory
  * @covers ::<!public>
+ *
  * @group factory
  */
 class EnginePluginManagerFactoryTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var EnginePluginManagerFactory
      */

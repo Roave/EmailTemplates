@@ -72,6 +72,9 @@ class AbstractOptionsFactoryTest extends \PHPUnit_Framework_TestCase
         $this->factory = new AbstractOptionsFactory();
     }
 
+    /**
+     * @return array
+     */
     public function classes()
     {
         return [

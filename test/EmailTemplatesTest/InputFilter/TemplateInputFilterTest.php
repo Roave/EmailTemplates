@@ -38,6 +38,7 @@
  * @copyright 2014 Roave, LLC
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
 namespace EmailTemplatesTest\InputFilter;
 
 use PHPUnit_Framework_TestCase;
@@ -102,7 +103,6 @@ class TemplateInputFilterTest extends PHPUnit_Framework_TestCase
             ['description', ' ', null, ''],                                      // Empty, asserting StringTrim
             ['description', 'Test description', null, 'Test description'],       // Valid
             ['description', ' Test description ', null, 'Test description'],     // Valid, asserting StringTrim
-
         ];
     }
 

@@ -54,6 +54,7 @@ use Zend\EventManager\EventManagerInterface;
  * Class UpdateTemplateParametersListenerTest
  *
  * @coversDefaultClass \Roave\EmailTemplates\Service\Template\Listener\UpdateTemplateParametersListener
+ * @covers ::<!public>
  *
  * @group service
  */
@@ -133,4 +134,4 @@ class UpdateTemplateParametersListenerTest extends PHPUnit_Framework_TestCase
 
         $this->template->update($event);
     }
-} 
+}

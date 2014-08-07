@@ -49,6 +49,9 @@ use Zend\Mail\Transport\Sendmail;
  * Class EmailServiceOptionsTest
  *
  * @coversDefaultClass \Roave\EmailTemplates\Options\EmailServiceOptions
+ * @covers ::<!public>
+ *
+ * @group options
  */
 class EmailServiceOptionsTest extends PHPUnit_Framework_TestCase
 {
@@ -57,7 +60,7 @@ class EmailServiceOptionsTest extends PHPUnit_Framework_TestCase
      */
     protected $options;
 
-    public function setUP()
+    public function setUp()
     {
         $this->options = new EmailServiceOptions();
     }

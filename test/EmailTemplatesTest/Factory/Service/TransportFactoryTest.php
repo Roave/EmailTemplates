@@ -41,7 +41,6 @@
 
 namespace EmailTemplatesTest\Factory\Service;
 
-
 use Roave\EmailTemplates\Factory\Service\Exception\InvalidArgumentException as InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\Factory\Service\Exception\ConfigurationException;
@@ -55,7 +54,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class TransportFactoryTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @var TransportFactory
      */

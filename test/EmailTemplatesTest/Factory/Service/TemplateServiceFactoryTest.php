@@ -39,11 +39,9 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-
 namespace EmailTemplatesTest\Factory\Service;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use EmailTemplatesTest\InputFilter\TemplateInputFilterTest;
 use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\Factory\Service\TemplateServiceFactory;
 use Roave\EmailTemplates\Hydrator\TemplateHydrator;

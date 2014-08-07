@@ -57,7 +57,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class TwigEngineFactoryTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @var TwigEngineFactory
      */

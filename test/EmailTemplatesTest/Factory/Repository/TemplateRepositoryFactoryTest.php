@@ -49,12 +49,14 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class TemplateRepositoryFactoryTest
- * @coversDefaultClass \Roave\EmailTemplates\Factory\Repository\TemplateRepositoryFactory
  *
+ * @coversDefaultClass \Roave\EmailTemplates\Factory\Repository\TemplateRepositoryFactory
+ * @covers ::<!public>
+ *
+ * @group factory
  */
 class TemplateRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var TemplateRepositoryFactory
      */

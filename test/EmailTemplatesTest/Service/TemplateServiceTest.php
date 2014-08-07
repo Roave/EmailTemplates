@@ -42,6 +42,7 @@ namespace EmailTemplatesTest\Service;
 
 use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
+use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\Entity\TemplateEntity;
 use Roave\EmailTemplates\Hydrator\TemplateHydrator;
@@ -64,34 +65,33 @@ use Zend\EventManager\EventManagerInterface;
  */
 class TemplateServiceTest extends PHPUnit_Framework_TestCase
 {
-
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var PHPUnit_Framework_MockObject_MockObject
      */
     protected $objectManager;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var PHPUnit_Framework_MockObject_MockObject
      */
     protected $repository;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var PHPUnit_Framework_MockObject_MockObject
      */
     protected $inputFilter;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var PHPUnit_Framework_MockObject_MockObject
      */
     protected $hydrator;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var PHPUnit_Framework_MockObject_MockObject
      */
     protected $engineManager;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var PHPUnit_Framework_MockObject_MockObject
      */
     protected $eventManager;
 
@@ -264,7 +264,6 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($template->getHtmlBody(), $html);
         $this->assertEquals($template->getTextBody(), $text);
     }
-
 
     /**
      * @covers ::update

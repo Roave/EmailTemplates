@@ -41,8 +41,6 @@
 
 namespace EmailTemplatesTest\Factory\Service\Template\Listener;
 
-
-use EmailTemplatesTest\Repository\TemplateRepositoryTest;
 use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\Factory\Service\Template\Listener\UpdateTemplateParametersListenerFactory;
 use Roave\EmailTemplates\Repository\TemplateRepository;
@@ -60,7 +58,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class UpdateTemplateParametersListenerFactoryTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @var UpdateTemplateParametersListenerFactory
      */
