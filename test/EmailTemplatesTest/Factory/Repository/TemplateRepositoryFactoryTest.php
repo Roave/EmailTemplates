@@ -39,33 +39,30 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace EmailTemplatesTest\Factory\Service\Template;
+namespace EmailTemplatesTest\Factory\Repository;
 
-
-use PHPUnit_Framework_TestCase;
-use Roave\EmailTemplates\Factory\Service\EmailServiceFactory;
-use Roave\EmailTemplates\Options\EmailServiceOptions;
-use Roave\EmailTemplates\Service\EmailService;
-use Roave\EmailTemplates\Service\TemplateService;
-use Roave\EmailTemplates\Service\TemplateServiceInterface;
-use Zend\Mail\Transport\TransportInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Roave\EmailTemplates\Entity\TemplateEntity;
+use Roave\EmailTemplates\Factory\Repository\TemplateRepositoryFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class EmailServiceFactoryTest
+ * Class TemplateRepositoryFactoryTest
+ * @coversDefaultClass \Roave\EmailTemplates\Factory\Repository\TemplateRepositoryFactory
  *
- * @coversDefaultClass \Roave\EmailTemplates\Factory\Service\EmailServiceFactory
  */
-class EmailServiceFactoryTest extends PHPUnit_Framework_TestCase
+class TemplateRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
-     * @var EmailServiceFactory
+     * @var TemplateRepositoryFactory
      */
     protected $factory;
 
     public function setUp()
     {
-        $this->factory = new EmailServiceFactory();
+        $this->factory = new TemplateRepositoryFactory();
     }
 
     /**
@@ -73,26 +70,22 @@ class EmailServiceFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateService()
     {
-        $transport = $this->getMock(TransportInterface::class);
-        $template = $this->getMock(TemplateServiceInterface::class);
+        $objectRepository = $this->getMock(ObjectRepository::class);
+
+        $objectManager = $this->getMock(ObjectManager::class);
+        $objectManager
+            ->expects($this->once())
+            ->method('getRepository')
+            ->with(TemplateEntity::class)
+            ->will($this->returnValue($objectRepository));
 
         $sl = $this->getMock(ServiceLocatorInterface::class);
         $sl
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('get')
-            ->with(EmailServiceOptions::class)
-            ->will($this->returnValue(new EmailServiceOptions()));
-        $sl
-            ->expects($this->at(1))
-            ->method('get')
-            ->with(TemplateService::class)
-            ->will($this->returnValue($template));
-        $sl
-            ->expects($this->at(2))
-            ->method('get')
-            ->with(TransportInterface::class)
-            ->will($this->returnValue($transport));
+            ->with('Roave\EmailTemplates\ObjectManager')
+            ->will($this->returnValue($objectManager));
 
-      $this->assertInstanceOf(EmailService::class, $this->factory->createService($sl));
+        $this->factory->createService($sl);
     }
-} 
+}
