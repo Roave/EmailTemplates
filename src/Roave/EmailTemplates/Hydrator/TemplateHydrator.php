@@ -77,7 +77,7 @@ class TemplateHydrator extends AbstractHydrator
             // Dates
             'createdAt'           => $this->extractValue('createdAt', $object->getCreatedAt()),
             'updatedAt'           => $this->extractValue('updatedAt', $object->getUpdatedAt()),
-            'parametersUpdatedAt' => $this->extractValue('parametersUpdatedAt', $object->getParamsUpdatedAt()),
+            'parametersUpdatedAt' => $this->extractValue('parametersUpdatedAt', $object->getParametersUpdatedAt()),
         ];
     }
 

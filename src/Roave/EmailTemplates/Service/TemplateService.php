@@ -183,19 +183,18 @@ class TemplateService implements TemplateServiceInterface
     public function update(array $data, TemplateEntity $template)
     {
         // Allow for delta updates
-        $data = array_merge(
-            $this->hydrator->extract($template),
-            $data
-        );
+        $data = array_merge($this->hydrator->extract($template), $data);
 
         $this->inputFilter->setData($data);
         if (! $this->inputFilter->isValid()) {
             throw Exception\FailedDataValidationException::create($this->inputFilter->getMessages());
         }
 
+        $values = $this->inputFilter->getValues();
+
         $template->setUpdatedAt(new DateTime());
 
-        $this->hydrator->hydrate($data, $template);
+        $this->hydrator->hydrate($values, $template);
         $this->objectManager->flush();
     }
 }

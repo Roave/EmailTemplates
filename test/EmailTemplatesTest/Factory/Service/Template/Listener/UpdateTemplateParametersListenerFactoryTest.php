@@ -32,35 +32,54 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
+ * @author    Jonas Rosenlind
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\EmailTemplates\Factory\Service\Template\Engine;
+namespace EmailTemplatesTest\Factory\Service\Template\Listener;
 
-use Roave\EmailTemplates\Options\Template\Engine\TwigOptions;
-use Roave\EmailTemplates\Service\Template\Engine\Twig;
-use Roave\EmailTemplates\Service\Template\EnginePluginManager;
-use Zend\ServiceManager\FactoryInterface;
+use PHPUnit_Framework_TestCase;
+use Roave\EmailTemplates\Factory\Service\Template\Listener\UpdateTemplateParametersListenerFactory;
+use Roave\EmailTemplates\Repository\TemplateRepository;
+use Roave\EmailTemplates\Repository\TemplateRepositoryInterface;
+use Roave\EmailTemplates\Service\Template\Listener\UpdateTemplateParametersListener;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class TwigEngineFactory implements FactoryInterface
+/**
+ * Class UpdateTemplateParametersListenerFactoryTest
+ *
+ * @coversDefaultClass \Roave\EmailTemplates\Factory\Service\Template\Listener\UpdateTemplateParametersListenerFactory
+ * @covers ::<!public>
+ *
+ * @group factory
+ */
+class UpdateTemplateParametersListenerFactoryTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Create service
-     *
-     * @param EnginePluginManager|ServiceLocatorInterface $engineManager
-     *
-     * @return mixed
+     * @var UpdateTemplateParametersListenerFactory
      */
-    public function createService(ServiceLocatorInterface $engineManager)
-    {
-        $sl = $engineManager->getServiceLocator();
+    protected $factory;
 
-        return new Twig(
-            $sl->get(TwigOptions::class)
-        );
+    public function setUp()
+    {
+        $this->factory = new UpdateTemplateParametersListenerFactory();
+    }
+
+    /**
+     * @covers ::createService
+     */
+    public function testCreateService()
+    {
+        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl
+            ->expects($this->at(0))
+            ->method('get')
+            ->with(TemplateRepository::class)
+            ->will($this->returnValue($this->getMock(TemplateRepositoryInterface::class)));
+
+        $this->assertInstanceOf(UpdateTemplateParametersListener::class, $this->factory->createService($sl));
     }
 }

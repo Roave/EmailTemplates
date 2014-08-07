@@ -32,35 +32,67 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
+ * @author    Jonas Rosenlind
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\EmailTemplates\Factory\Service\Template\Engine;
+namespace EmailTemplatesTest\Service\Template;
 
-use Roave\EmailTemplates\Options\Template\Engine\TwigOptions;
-use Roave\EmailTemplates\Service\Template\Engine\Twig;
+use Roave\EmailTemplates\Factory\Service\Template\EnginePluginManagerFactory;
+use Roave\EmailTemplates\Service\Template\Engine\EchoResponse;
 use Roave\EmailTemplates\Service\Template\EnginePluginManager;
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class TwigEngineFactory implements FactoryInterface
+/**
+ * Class EnginePluginManagerFactoryTest]
+ *
+ * @coversDefaultClass \Roave\EmailTemplates\Factory\Service\Template\EnginePluginManagerFactory
+ * @covers ::<!public>
+ *
+ * @group factory
+ */
+class EnginePluginManagerFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Create service
-     *
-     * @param EnginePluginManager|ServiceLocatorInterface $engineManager
-     *
-     * @return mixed
+     * @var EnginePluginManagerFactory
      */
-    public function createService(ServiceLocatorInterface $engineManager)
-    {
-        $sl = $engineManager->getServiceLocator();
+    protected $factory;
 
-        return new Twig(
-            $sl->get(TwigOptions::class)
-        );
+    public function setUp()
+    {
+        $this->factory = new EnginePluginManagerFactory();
+    }
+
+    /**
+     * @covers ::createService
+     */
+    public function testCreateService()
+    {
+        $config = [
+            'roave' => [
+                'email_templates' => [
+                    'engine_manager' => [
+                        'invokables' => [
+                            EchoResponse::class => EchoResponse::class
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl
+            ->expects($this->once())
+            ->method('get')
+            ->with('Config')
+            ->will($this->returnValue($config));
+
+        $engineManager = $this->factory->createService($sl);
+
+        $this->assertInstanceOf(EnginePluginManager::class, $engineManager);
+        $this->assertTrue($engineManager->has(EchoResponse::class));
     }
 }

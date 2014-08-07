@@ -40,13 +40,24 @@
 
 namespace EmailTemplatesTest\Factory;
 
+use PHPUnit_Framework_MockObject_MockObject;
 use Roave\EmailTemplates\Factory\AbstractOptionsFactory;
+use Roave\EmailTemplates\Options\EmailServiceOptions;
+use Roave\EmailTemplates\Options\TemplateServiceOptions;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * Class AbstractOptionsFactoryTest
+ *
+ * @coversDefaultClass \Roave\EmailTemplates\Factory\AbstractOptionsFactory
+ * @covers ::<!public>
+ *
+ * @group factory
+ */
 class AbstractOptionsFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var PHPUnit_Framework_MockObject_MockObject
      */
     protected $sl;
 
@@ -61,6 +72,9 @@ class AbstractOptionsFactoryTest extends \PHPUnit_Framework_TestCase
         $this->factory = new AbstractOptionsFactory();
     }
 
+    /**
+     * @return array
+     */
     public function classes()
     {
         return [
@@ -70,11 +84,14 @@ class AbstractOptionsFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $normalizedName
-     * @param $requestedName
-     * @param $canCreate
-     *
      * @dataProvider classes
+     * @covers ::canCreateServiceWithName
+     *
+     * @param string $normalizedName
+     * @param string $requestedName
+     * @param string $canCreate
+     *
+     * @return void
      */
     public function testCanCreateOptionClasses($normalizedName, $requestedName, $canCreate)
     {
@@ -82,5 +99,45 @@ class AbstractOptionsFactoryTest extends \PHPUnit_Framework_TestCase
             $canCreate,
             $this->factory->canCreateServiceWithName($this->sl, $normalizedName,  $requestedName)
         );
+    }
+
+    /**
+     * @covers ::createServiceWithName
+     */
+    public function testCreateServiceWithName()
+    {
+        $config = [
+            'roave' => [
+                'options' => [
+                    EmailServiceOptions::class => [
+                        'from' => 'awesome@roave.com'
+                    ],
+
+                    TemplateServiceOptions::class => [
+                        'engine' => 'echo'
+                    ]
+                ]
+            ]
+        ];
+
+        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl
+            ->expects($this->any())
+            ->method('get')
+            ->with('Config')
+            ->will($this->returnValue($config));
+
+        /**
+         * @var $emailOptions EmailServiceOptions
+         * @var $templateOptions TemplateServiceOptions
+         */
+        $emailOptions    = $this->factory->createServiceWithName($sl, 'unUsedArgument', EmailServiceOptions::class);
+        $templateOptions = $this->factory->createServiceWithName($sl, 'unUsedArgument', TemplateServiceOptions::class);
+
+        $this->assertInstanceOf(TemplateServiceOptions::class, $templateOptions);
+        $this->assertInstanceOf(EmailServiceOptions::class, $emailOptions);
+
+        $this->assertEquals('awesome@roave.com', $emailOptions->getFrom());
+        $this->assertEquals('echo', $templateOptions->getEngine());
     }
 }

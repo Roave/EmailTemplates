@@ -32,35 +32,62 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
+ * @author    Jonas Rosenlind
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\EmailTemplates\Factory\Service\Template\Engine;
+namespace EmailTemplatesTest\Factory\Repository;
 
-use Roave\EmailTemplates\Options\Template\Engine\TwigOptions;
-use Roave\EmailTemplates\Service\Template\Engine\Twig;
-use Roave\EmailTemplates\Service\Template\EnginePluginManager;
-use Zend\ServiceManager\FactoryInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Roave\EmailTemplates\Entity\TemplateEntity;
+use Roave\EmailTemplates\Factory\Repository\TemplateRepositoryFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class TwigEngineFactory implements FactoryInterface
+/**
+ * Class TemplateRepositoryFactoryTest
+ *
+ * @coversDefaultClass \Roave\EmailTemplates\Factory\Repository\TemplateRepositoryFactory
+ * @covers ::<!public>
+ *
+ * @group factory
+ */
+class TemplateRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Create service
-     *
-     * @param EnginePluginManager|ServiceLocatorInterface $engineManager
-     *
-     * @return mixed
+     * @var TemplateRepositoryFactory
      */
-    public function createService(ServiceLocatorInterface $engineManager)
-    {
-        $sl = $engineManager->getServiceLocator();
+    protected $factory;
 
-        return new Twig(
-            $sl->get(TwigOptions::class)
-        );
+    public function setUp()
+    {
+        $this->factory = new TemplateRepositoryFactory();
+    }
+
+    /**
+     * @covers ::createService
+     */
+    public function testCreateService()
+    {
+        $objectRepository = $this->getMock(ObjectRepository::class);
+
+        $objectManager = $this->getMock(ObjectManager::class);
+        $objectManager
+            ->expects($this->once())
+            ->method('getRepository')
+            ->with(TemplateEntity::class)
+            ->will($this->returnValue($objectRepository));
+
+        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl
+            ->expects($this->once())
+            ->method('get')
+            ->with('Roave\EmailTemplates\ObjectManager')
+            ->will($this->returnValue($objectManager));
+
+        $this->factory->createService($sl);
     }
 }

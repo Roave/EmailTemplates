@@ -32,48 +32,79 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
+ * @author    Jonas Rosenlind
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\EmailTemplates\Service\Template\Engine;
+namespace EmailTemplatesTest\Options\Template\Engine;
 
+use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\Options\Template\Engine\TwigOptions;
-use Twig_Environment;
-use Twig_Loader_String;
 
 /**
- * Class TwigEngine
+ * Class TwigOptionsTest
  *
- * A simple decorator for the twig engine
+ * @coversDefaultClass \Roave\EmailTemplates\Options\Template\Engine\TwigOptions
+ * @covers ::<!public>
+ *
+ * @group options
  */
-class Twig implements EngineInterface
+class TwigOptionsTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Twig_Environment
+     * @var TwigOptions
      */
-    protected $twig;
+    protected $options;
 
-    /**
-     * Constructs a twig engine from the given options
-     *
-     * @param TwigOptions $options
-     */
-    public function __construct(TwigOptions $options = null)
+    public function setUp()
     {
-        $options = ($options === null) ? new TwigOptions() : $options;
-        $loader = new Twig_Loader_String();
-
-        $this->twig = new Twig_Environment($loader, $options->toArray());
+        $this->options = new TwigOptions();
     }
 
     /**
-     * @inheritdoc
+     * @covers ::setAutoescape
+     * @covers ::getAutoescape
      */
-    public function render($template, array $params = [])
+    public function testSetGetAutoescape()
     {
-        return $this->twig->render($template, $params);
+        $this->assertEquals('html', $this->options->getAutoescape());
+        $this->options->setAutoescape('text');
+        $this->assertEquals('text', $this->options->getAutoescape());
+    }
+
+    /**
+     * @covers ::setCache
+     * @covers ::getCache
+     */
+    public function testSetGetCache()
+    {
+        $this->assertEquals('data/cache/twig', $this->options->getCache());
+        $this->options->setCache('foobar');
+        $this->assertEquals('foobar', $this->options->getCache());
+    }
+
+    /**
+     * @covers ::setCharset
+     * @covers ::getCharset
+     */
+    public function testSetGetCharset()
+    {
+        $this->assertEquals('utf8', $this->options->getCharset());
+        $this->options->setCharset('barfoo');
+        $this->assertEquals('barfoo', $this->options->getCharset());
+    }
+
+    /**
+     * @covers ::setDebug
+     * @covers ::getDebug
+     */
+    public function testSetGetDebug()
+    {
+        $this->assertFalse($this->options->getDebug());
+        $this->options->setDebug(true);
+        $this->assertTrue($this->options->getDebug());
     }
 }

@@ -32,48 +32,70 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
+ * @author    Jonas Rosenlind
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\EmailTemplates\Service\Template\Engine;
+namespace EmailTemplatesTest\Options;
 
-use Roave\EmailTemplates\Options\Template\Engine\TwigOptions;
-use Twig_Environment;
-use Twig_Loader_String;
+
+use PHPUnit_Framework_TestCase;
+use Roave\EmailTemplates\Options\TemplateServiceOptions;
 
 /**
- * Class TwigEngine
+ * Class TemplateServiceOptionsTest
  *
- * A simple decorator for the twig engine
+ * @coversDefaultClass \Roave\EmailTemplates\Options\TemplateServiceOptions
+ * @covers ::<!public>
+ *
+ * @group options
  */
-class Twig implements EngineInterface
+class TemplateServiceOptionsTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Twig_Environment
+     * @var TemplateServiceOptions
      */
-    protected $twig;
+    protected $options;
 
-    /**
-     * Constructs a twig engine from the given options
-     *
-     * @param TwigOptions $options
-     */
-    public function __construct(TwigOptions $options = null)
+    public function setUp()
     {
-        $options = ($options === null) ? new TwigOptions() : $options;
-        $loader = new Twig_Loader_String();
-
-        $this->twig = new Twig_Environment($loader, $options->toArray());
+        $this->options = new TemplateServiceOptions();
     }
 
     /**
-     * @inheritdoc
+     * @covers ::setDefaultBody
+     * @covers ::getDefaultBody
      */
-    public function render($template, array $params = [])
+    public function testSetGetDefaultBody()
     {
-        return $this->twig->render($template, $params);
+        $this->assertEquals('This is the default message for the template with id: %s,locale: %s', $this->options->getDefaultBody());
+        $this->options->setDefaultBody('A new, bit thinner body');
+        $this->assertEquals('A new, bit thinner body', $this->options->getDefaultBody());
     }
+
+    /**
+     * @covers ::getDefaultSubject
+     * @covers ::setDefaultSubject
+     */
+    public function testSetGetDefaultSubject()
+    {
+        $this->assertEquals('Subject has not yet been set', $this->options->getDefaultSubject());
+        $this->options->setDefaultSubject('Subject has been set');
+        $this->assertEquals('Subject has been set', $this->options->getDefaultSubject());
+    }
+
+    /**
+     * @covers ::setEngine
+     * @covers ::getEngine
+     */
+    public function testSetGetEngine()
+    {
+        $this->assertEquals('twig', $this->options->getEngine());
+        $this->options->setEngine('B20');
+        $this->assertEquals('B20', $this->options->getEngine());
+    }
+
 }

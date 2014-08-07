@@ -32,35 +32,60 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
+ * @author    Jonas Rosenlind
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+namespace EmailTemplatesTest\Service\Template\Engine;
 
-namespace Roave\EmailTemplates\Factory\Service\Template\Engine;
 
+use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\Options\Template\Engine\TwigOptions;
 use Roave\EmailTemplates\Service\Template\Engine\Twig;
-use Roave\EmailTemplates\Service\Template\EnginePluginManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-class TwigEngineFactory implements FactoryInterface
+/**
+ * Class TwigTest
+ *
+ * @coversDefaultClass \Roave\EmailTemplates\Service\Template\Engine\Twig
+ * @covers ::<!public>
+ *
+ * @group service
+ */
+class TwigTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Create service
-     *
-     * @param EnginePluginManager|ServiceLocatorInterface $engineManager
-     *
-     * @return mixed
+     * @var Twig
      */
-    public function createService(ServiceLocatorInterface $engineManager)
-    {
-        $sl = $engineManager->getServiceLocator();
+    protected $twig;
 
-        return new Twig(
-            $sl->get(TwigOptions::class)
-        );
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $options;
+
+    /**
+     * @covers ::__construct
+     */
+    public function setUp()
+    {
+        $this->options = new TwigOptions();
+        $this->twig    = new Twig($this->options);
+    }
+
+    /**
+     * @covers ::render
+     */
+    public function testRender()
+    {
+        $template = '{{name}}, I am your father';
+        $params   = [
+            'name' => 'Luke'
+        ];
+
+        $expectedResponse = 'Luke, I am your father';
+
+        $this->assertSame($expectedResponse, $this->twig->render($template, $params));
     }
 }

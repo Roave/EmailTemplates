@@ -40,7 +40,6 @@
 
 namespace Roave\EmailTemplates\Service;
 
-use Zend\Mail\Header\ContentType;
 use Zend\Mime\Part as MimePart;
 use Zend\Mime\Message as MimeMessage;
 use Zend\Mail\Message as MailMessage;
@@ -94,7 +93,9 @@ class EmailService implements EmailServiceInterface
     public function getTransport()
     {
         if ($this->transport === null) {
-            $this->transport = new $this->options->getDefaultTransport();
+
+            $className = $this->options->getDefaultTransport();
+            $this->transport = new $className;
         }
 
         return $this->transport;

@@ -32,35 +32,44 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
+ * @author    Jonas Rosenlind
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\EmailTemplates\Factory\Service\Template\Engine;
+namespace EmailTemplatesTest\Service\Template\Engine;
 
-use Roave\EmailTemplates\Options\Template\Engine\TwigOptions;
-use Roave\EmailTemplates\Service\Template\Engine\Twig;
-use Roave\EmailTemplates\Service\Template\EnginePluginManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-class TwigEngineFactory implements FactoryInterface
+use PHPUnit_Framework_TestCase;
+use Roave\EmailTemplates\Service\Template\Engine\EchoResponse;
+
+/**
+ * Class EchoResponseTest
+ *
+ * @coversDefaultClass \Roave\EmailTemplates\Service\Template\Engine\EchoResponse
+ * @covers ::<!public>
+ *
+ * @group service
+ */
+class EchoResponseTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Create service
-     *
-     * @param EnginePluginManager|ServiceLocatorInterface $engineManager
-     *
-     * @return mixed
+     * @var EchoResponse
      */
-    public function createService(ServiceLocatorInterface $engineManager)
-    {
-        $sl = $engineManager->getServiceLocator();
+    protected $response;
 
-        return new Twig(
-            $sl->get(TwigOptions::class)
-        );
+    public function setUp()
+    {
+        $this->response = new EchoResponse();
+    }
+
+    /**
+     * @covers ::render
+     */
+    public function testRender()
+    {
+        $this->assertSame('roaveIsAwesome', $this->response->render('roaveIsAwesome', ['some' => 'params']));
     }
 }

@@ -32,35 +32,59 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
+ * @author    Jonas Rosenlind
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+namespace EmailTemplatesTest\Factory\Service\Template\Engine;
 
-namespace Roave\EmailTemplates\Factory\Service\Template\Engine;
-
+use PHPUnit_Framework_TestCase;
+use Roave\EmailTemplates\Factory\Service\Template\Engine\TwigEngineFactory;
 use Roave\EmailTemplates\Options\Template\Engine\TwigOptions;
 use Roave\EmailTemplates\Service\Template\Engine\Twig;
 use Roave\EmailTemplates\Service\Template\EnginePluginManager;
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class TwigEngineFactory implements FactoryInterface
+/**
+ * Class TwigEngineFactoryTest
+ *
+ * @coversDefaultClass \Roave\Emailtemplates\Factory\Service\Template\Engine\TwigEngineFactory
+ * @covers ::<!public>
+ *
+ * @group factory
+ */
+class TwigEngineFactoryTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Create service
-     *
-     * @param EnginePluginManager|ServiceLocatorInterface $engineManager
-     *
-     * @return mixed
+     * @var TwigEngineFactory
      */
-    public function createService(ServiceLocatorInterface $engineManager)
-    {
-        $sl = $engineManager->getServiceLocator();
+    protected $factory;
 
-        return new Twig(
-            $sl->get(TwigOptions::class)
-        );
+    public function setUp()
+    {
+        $this->factory = new TwigEngineFactory();
+    }
+
+    /**
+     * @covers ::createService
+     */
+    public function testCreateService()
+    {
+        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl
+            ->expects($this->once())
+            ->method('get')
+            ->with(TwigOptions::class)
+            ->will($this->returnValue(new TwigOptions()));
+
+        $engine = $this->getMock(EnginePluginManager::class);
+        $engine
+            ->expects($this->once())
+            ->method('getServiceLocator')
+            ->will($this->returnValue($sl));
+
+        $this->assertInstanceOf(Twig::class, $this->factory->createService($engine));
     }
 }
