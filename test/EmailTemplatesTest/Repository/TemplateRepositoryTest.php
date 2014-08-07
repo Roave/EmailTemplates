@@ -84,15 +84,16 @@ class TemplateRepositoryTest extends PHPUnit_Framework_TestCase
      */
     public function testGetById()
     {
-        $id = 42;
+        $id       = 42;
+        $template = new TemplateEntity();
 
         $this->objectRepository
             ->expects($this->once())
             ->method('findBy')
             ->with(['id' => $id])
-            ->will($this->returnValue(new TemplateEntity()));
+            ->will($this->returnValue($template));
 
-        $this->assertInstanceOf(TemplateEntity::class, $this->templateRepo->getById($id));
+        $this->assertSame($template, $this->templateRepo->getById($id));
     }
 
     /**
@@ -102,14 +103,16 @@ class TemplateRepositoryTest extends PHPUnit_Framework_TestCase
     {
         $id     = 1337;
         $locale = 'sv_SE';
+        $template = new TemplateEntity();
+
 
         $this->objectRepository
             ->expects($this->once())
             ->method('findOneBy')
             ->with(['id' => $id, 'locale' => $locale])
-            ->will($this->returnValue(new TemplateEntity()));
+            ->will($this->returnValue($template));
 
-        $this->assertInstanceOf(TemplateEntity::class, $this->templateRepo->getByIdAndLocale($id, $locale));
+        $this->assertSame($template, $this->templateRepo->getByIdAndLocale($id, $locale));
     }
 
     /**
@@ -144,4 +147,4 @@ class TemplateRepositoryTest extends PHPUnit_Framework_TestCase
 
         $this->assertNull($this->templateRepo->getByIdAndLocale($id, $locale));
     }
-} 
+}
