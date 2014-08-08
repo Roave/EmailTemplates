@@ -43,13 +43,22 @@ namespace Roave\EmailTemplates\InputFilter;
 use Zend\Filter\Boolean;
 use Zend\Filter\StringTrim;
 use Zend\InputFilter\InputFilter;
+use Zend\Validator\NotEmpty;
 
 class TemplateInputFilter extends InputFilter
 {
     public function init()
     {
         $this->add([
-            'name'    => 'updateParameters',
+            'name'       => 'updateParameters',
+            'validators' => [
+                [
+                    'name'    => NotEmpty::class,
+                    'options' => [
+                        'type' => NotEmpty::ALL & ~NotEmpty::BOOLEAN
+                    ]
+                ]
+            ],
             'filters' => [
                 [
                     'name' => Boolean::class
