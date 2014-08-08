@@ -100,7 +100,6 @@ class TemplateHydrator extends AbstractHydrator
             ));
         }
 
-        $object->setLocale($this->hydrateValue('locale', $data['locale']));
         $object->setSubject($this->hydrateValue('subject', $data['subject']));
         $object->setTextBody($this->hydrateValue('textBody', $data['textBody']));
         $object->setHtmlBody($this->hydrateValue('htmlBody', $data['htmlBody']));

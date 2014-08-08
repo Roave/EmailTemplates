@@ -166,7 +166,6 @@ class TemplateHydratorTest extends PHPUnit_Framework_TestCase
         $template = $this->getMock(TemplateEntity::class);
 
         $expectedProperties = [
-            'setLocale'              => 'locale',
             'setSubject'             => 'subject',
             'setTextBody'            => 'textBody',
             'setHtmlBody'            => 'htmlBody',

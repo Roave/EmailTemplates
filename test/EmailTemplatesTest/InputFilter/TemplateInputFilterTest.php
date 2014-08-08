@@ -77,8 +77,8 @@ class TemplateInputFilterTest extends PHPUnit_Framework_TestCase
     public function propertyValidationData()
     {
         return [
-            ['updateParameters', '', [NotEmpty::IS_EMPTY]],                      // Empty
             ['updateParameters', true, null, true],                              // Valid
+            ['updateParameters', false, null, false],                            // Valid
             ['updateParameters', 'true', null, true],                            // Valid
 
             ['parameters', '', [NotEmpty::IS_EMPTY]],                            // Empty
