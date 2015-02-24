@@ -108,9 +108,6 @@ class EmailService implements EmailServiceInterface
 
         list ($subject, $html, $text) = $this->templates->render($templateId, $locale, $params);
 
-        $message = new MailMessage();
-        $message->getHeaders()->addHeaderLine('Content-Type', 'multipart/alternative');
-
         $htmlPart = new MimePart($html);
         $htmlPart->type = 'text/html';
 
@@ -120,6 +117,7 @@ class EmailService implements EmailServiceInterface
         $body = new MimeMessage();
         $body->setParts([$htmlPart, $textPart]);
 
+        $message = new MailMessage();
         $message->setEncoding($this->options->getEncoding());
         $message->setBody($body);
 
@@ -128,6 +126,7 @@ class EmailService implements EmailServiceInterface
         $message->setFrom($this->options->getFrom());
         $message->setTo($email);
         $message->setBcc($this->options->getBcc());
+        $message->getHeaders()->get('content-type')->setType('multipart/alternative');
 
         $this->getTransport()->send($message);
     }
