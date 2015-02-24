@@ -94,4 +94,30 @@ class EmailServiceTest extends PHPUnit_Framework_TestCase
         $this->service->setTransport($transport);
         $this->service->send($email, $templateId, $parameters, $locale);
     }
+
+    /**
+     * @covers ::send
+     */
+    public function testSendHasCorrectContentType()
+    {
+        $email      = 'contact@roave.com';
+        $locale     = 'sv_SE';
+        $templateId = 'roave:contact';
+        $parameters = ['name' => 'Hotas'];
+
+        $transport = $this->getMock(TransportInterface::class);
+        $transport
+            ->expects($this->once())
+            ->method('send')
+            ->with($this->isInstanceOf(Message::class))
+            ->will($this->returnCallback(function(Message $message) {
+                $contentType = $message->getHeaders()->get('content-type');
+                $this->assertContains('multipart/alternative', $contentType->getFieldValue());
+            }));
+
+        $this->service->setTransport($transport);
+        $this->service->send($email, $templateId, $parameters, $locale);
+    }
+
+
 }
