@@ -13,11 +13,11 @@
     }
   ],
   "require": {
-    "zendframework/zend-eventmanager": "~2.4.0",
-    "zendframework/zend-inputfilter": "~2.4.0",
-    "zendframework/zend-servicemanager": "~2.4.0",
-    "zendframework/zend-stdlib": "~2.4.0",
-    "zendframework/zend-mail": "~2.4.0",
+    "zendframework/zend-eventmanager": "~2.5.0",
+    "zendframework/zend-inputfilter": "~2.5.0",
+    "zendframework/zend-servicemanager": "~2.5.0",
+    "zendframework/zend-stdlib": "~2.5.0",
+    "zendframework/zend-mail": "~2.5.0",
     "doctrine/doctrine-module": "~0.9.0",
     "php": ">=5.5.0"
   },
