@@ -5,18 +5,17 @@
   "authors": [
     {
       "name": "Antoine Hedgecock",
-      "email": "antoine@pmg.se"
+      "email": "antoine.hedgecock@gmail.com"
     },
     {
-      "name": "Jonas Eriksson",
-      "email": "jonas@pmg.se"
+      "name": "Jonas Eriksson"
     }
   ],
   "require": {
     "zendframework/zend-eventmanager": "~2.5.0",
     "zendframework/zend-inputfilter": "~2.5.0",
-    "zendframework/zend-servicemanager": "~2.5.0",
-    "zendframework/zend-stdlib": "~2.5.0",
+    "zendframework/zend-servicemanager": "^2.5.0 || ^3.0.0",
+    "zendframework/zend-stdlib": "^2.5.0 || ^3.0.0",
     "zendframework/zend-mail": "~2.5.0",
     "doctrine/doctrine-module": "~0.9.0",
     "php": ">=5.5.0"
