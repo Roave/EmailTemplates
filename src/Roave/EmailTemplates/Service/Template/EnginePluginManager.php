@@ -42,22 +42,31 @@ namespace Roave\EmailTemplates\Service\Template;
 
 use Roave\EmailTemplates\Service\Template\Engine\EngineInterface;
 use Zend\ServiceManager\AbstractPluginManager;
+use Zend\ServiceManager\Exception\InvalidServiceException;
 
 class EnginePluginManager extends AbstractPluginManager
 {
+    protected $instanceOf = EngineInterface::class;
+
     protected $autoAddInvokableClass = false;
 
+    protected $shareByDefault = false;
+
+    protected $sharedByDefault = false;
+
+    public function validate($instance)
+    {
+        if (! $instance instanceof EngineInterface) {
+            throw new InvalidServiceException(sprintf(
+                'Invalid plugin "%s" created; not an instance of %s',
+                get_class($instance),
+                $this->instanceOf
+            ));
+        }
+    }
+
     /**
-     * Validate the plugin
-     *
-     * Checks that the filter loaded is either a valid callback or an instance
-     * of FilterInterface.
-     *
-     * @param mixed $plugin
-     *
-     * @throws Exception\InvalidEngineException
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function validatePlugin($plugin)
     {
