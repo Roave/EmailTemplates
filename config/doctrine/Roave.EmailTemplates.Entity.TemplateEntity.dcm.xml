@@ -18,7 +18,7 @@
         <field name="locale" type="string"/>
 
         <field name="updateParameters" type="boolean" nullable="false"/>
-        <field name="parameters" type="array" nullable="true"/>
+        <field name="parameters" type="json_array" nullable="true"/>
         <field name="subject" type="string"/>
         <field name="textBody" type="text"/>
         <field name="htmlBody" type="text"/>
