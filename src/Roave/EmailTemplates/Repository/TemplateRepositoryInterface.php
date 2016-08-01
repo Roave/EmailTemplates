@@ -58,6 +58,13 @@ interface TemplateRepositoryInterface extends Selectable
     public function getById($id);
 
     /**
+     * @param string $uuid
+     *
+     * @return TemplateEntity|null
+     */
+    public function getByUuid($uuid);
+
+    /**
      * Retrieve a template by it's id and locale
      *
      * @param string $templateId

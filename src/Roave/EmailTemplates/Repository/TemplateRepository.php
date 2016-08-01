@@ -75,6 +75,14 @@ class TemplateRepository implements TemplateRepositoryInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getByUuid($uuid)
+    {
+        return $this->objectRepository->findOneBy(['uuid' => $uuid]);
+    }
+
+    /**
      * Retrieve a template by it's id and locale
      *
      * @param string $templateId
