@@ -52,6 +52,14 @@ class EmailServiceTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    private function mockRender()
+    {
+        $this->templateService
+            ->expects($this->once())
+            ->method('render')
+            ->willReturn(['subject', 'html', 'text']);
+    }
+
     /**
      * @covers ::setTransport
      */
@@ -85,6 +93,8 @@ class EmailServiceTest extends PHPUnit_Framework_TestCase
         $templateId = 'roave:contact';
         $parameters = ['name' => 'Antoine'];
 
+        $this->mockRender();
+
         $transport = $this->getMock(TransportInterface::class);
         $transport
             ->expects($this->once())
@@ -104,6 +114,8 @@ class EmailServiceTest extends PHPUnit_Framework_TestCase
         $locale     = 'sv_SE';
         $templateId = 'roave:contact';
         $parameters = ['name' => 'Hotas'];
+
+        $this->mockRender();
 
         $transport = $this->getMock(TransportInterface::class);
         $transport
