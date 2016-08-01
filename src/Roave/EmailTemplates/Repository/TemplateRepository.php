@@ -63,11 +63,7 @@ class TemplateRepository implements TemplateRepositoryInterface
     }
 
     /**
-     * Retrieve a set of templates by it's
-     *
-     * @param mixed $id
-     *
-     * @return TemplateEntity[]
+     * @inheritDoc
      */
     public function getById($id)
     {
@@ -83,12 +79,7 @@ class TemplateRepository implements TemplateRepositoryInterface
     }
 
     /**
-     * Retrieve a template by it's id and locale
-     *
-     * @param string $templateId
-     * @param string $locale
-     *
-     * @return TemplateEntity|null
+     * @inheritDoc
      */
     public function getByIdAndLocale($templateId, $locale)
     {
@@ -96,11 +87,7 @@ class TemplateRepository implements TemplateRepositoryInterface
     }
 
     /**
-     * Find all objects matching the provided criteria
-     *
-     * @param Criteria $criteria
-     *
-     * @return array
+     * @inheritDoc
      */
     public function matching(Criteria $criteria)
     {
