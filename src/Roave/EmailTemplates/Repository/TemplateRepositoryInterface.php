@@ -40,12 +40,13 @@
 
 namespace Roave\EmailTemplates\Repository;
 
+use Doctrine\Common\Collections\Selectable;
 use Roave\EmailTemplates\Entity\TemplateEntity;
 
 /**
  * Class TemplateInterface
  */
-interface TemplateRepositoryInterface
+interface TemplateRepositoryInterface extends Selectable
 {
     /**
      * Retrieve a set of templates by it's
