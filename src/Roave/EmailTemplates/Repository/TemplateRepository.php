@@ -40,6 +40,7 @@
 
 namespace Roave\EmailTemplates\Repository;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Roave\EmailTemplates\Entity\TemplateEntity;
 
@@ -84,5 +85,17 @@ class TemplateRepository implements TemplateRepositoryInterface
     public function getByIdAndLocale($templateId, $locale)
     {
         return $this->objectRepository->findOneBy(['id' => $templateId, 'locale' => $locale]);
+    }
+
+    /**
+     * Find all objects matching the provided criteria
+     *
+     * @param Criteria $criteria
+     *
+     * @return array
+     */
+    public function matching(Criteria $criteria)
+    {
+        return $this->objectRepository->matching($criteria);
     }
 }
