@@ -120,31 +120,31 @@ class TemplateService implements TemplateServiceInterface
      *
      * @triggers render
      *
-     * @param string                  $templateId
-     * @param string                  $locale
+     * @param string             $templateId
+     * @param string             $locale
      * @param array|\Traversable $parameters
      *
      * @return string[]
      */
     public function render($templateId, $locale, array $parameters = array())
     {
-        $template   = $this->repository->getByIdAndLocale($templateId, $locale);
-        $parameters = array_merge($this->options->getPredefinedParams(), $parameters);
+        $template = $this->repository->getByIdAndLocale($templateId, $locale);
+        $mergedParameters = array_merge($this->options->getPredefinedParams(), $parameters);
 
         if (! $template) {
-            $template = $this->create($templateId, $locale, $parameters);
+            $template = $this->create($templateId, $locale, $mergedParameters);
         }
 
         $this->getEventManager()
-            ->trigger(static::EVENT_RENDER, $this, ['template' => $template, 'parameters' => $parameters]);
+            ->trigger(static::EVENT_RENDER, $this, ['template' => $template, 'parameters' => $mergedParameters]);
 
         /** @var EngineInterface $engine */
         $engine = $this->engineManager->get($this->options->getEngine());
 
         return [
-            $engine->render($template->getSubject(), $parameters),
-            $engine->render($template->getHtmlBody(), $parameters),
-            $engine->render($template->getTextBody(), $parameters)
+            $engine->render($template->getSubject(), $mergedParameters),
+            $engine->render($template->getHtmlBody(), $mergedParameters),
+            $engine->render($template->getTextBody(), $mergedParameters)
         ];
     }
 
