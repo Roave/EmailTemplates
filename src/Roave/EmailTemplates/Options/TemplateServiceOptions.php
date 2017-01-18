@@ -75,6 +75,13 @@ class TemplateServiceOptions extends AbstractOptions
     protected $defaultBody = 'This is the default message for the template with id: %s,locale: %s';
 
     /**
+     * Set predefined parameters that will exist in all templates
+     *
+     * @var array
+     */
+    protected $predefinedParams = [];
+
+    /**
      * @param string $defaultBody
      */
     public function setDefaultBody($defaultBody)
@@ -120,5 +127,21 @@ class TemplateServiceOptions extends AbstractOptions
     public function getEngine()
     {
         return $this->engine;
+    }
+
+    /**
+     * @param array $predefinedParams
+     */
+    public function setPredefinedParams(array $predefinedParams)
+    {
+        $this->predefinedParams = $predefinedParams;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPredefinedParams()
+    {
+        return $this->predefinedParams;
     }
 }
