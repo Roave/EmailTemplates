@@ -87,6 +87,11 @@ class TemplateService implements TemplateServiceInterface
     private $engineManager;
 
     /**
+     * @var TemplateServiceOptions
+     */
+    private $options;
+
+    /**
      * @param ObjectManager               $objectManager
      * @param TemplateRepositoryInterface $repository
      * @param TemplateInputFilter         $inputFilter
@@ -123,7 +128,8 @@ class TemplateService implements TemplateServiceInterface
      */
     public function render($templateId, $locale, array $parameters = array())
     {
-        $template = $this->repository->getByIdAndLocale($templateId, $locale);
+        $template   = $this->repository->getByIdAndLocale($templateId, $locale);
+        $parameters = array_merge($this->options->getPredefinedParams(), $parameters);
 
         if (! $template) {
             $template = $this->create($templateId, $locale, $parameters);
