@@ -98,4 +98,15 @@ class TemplateServiceOptionsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('B20', $this->options->getEngine());
     }
 
+    /**
+     * @covers ::setPredefinedParams
+     * @covers ::getPredefinedParams
+     */
+    public function testSetGetPredefinedParams()
+    {
+        $this->assertEquals([], $this->options->getPredefinedParams());
+        $this->options->setPredefinedParams(['url' => 'http://']);
+        $this->assertArrayHasKey('url', $this->options->getPredefinedParams());
+        $this->assertSame(['url' => 'http://'], $this->options->getPredefinedParams());
+    }
 }

@@ -323,4 +323,63 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
 
         $this->templateService->update($data, $template);
     }
+
+    /**
+     * @covers ::render
+     */
+    public function testRenderWillMergePredefinedParametersWithParameters()
+    {
+        $locale               = 'sv_SE';
+        $templateId           = 'test:template:id';
+        $parameters           = ['company' => 'Roave'];
+        $predefinedParameters = ['company' => 'ShouldNotBeThisOne', 'anotherOneThatShouldBeIncluded' => 'value'];
+        $expectedParameters   = ['company' => 'Roave', 'anotherOneThatShouldBeIncluded' => 'value'];
+
+        $this->options->setPredefinedParams($predefinedParameters);
+
+        $template = new TemplateEntity();
+        $template->setSubject($this->options->getDefaultSubject());
+        $template->setTextBody(sprintf($this->options->getDefaultBody(), $templateId, $locale));
+        $template->setHtmlBody(sprintf($this->options->getDefaultBody(), $templateId, $locale));
+
+        $engine = $this->getMock(EngineInterface::class);
+
+        // First run is the subject
+        $engine
+            ->expects($this->at(0))
+            ->method('render')
+            ->with($template->getSubject(), $expectedParameters)
+            ->will($this->returnValue($template->getSubject()));
+
+        // Second run is the html body
+        $engine
+            ->expects($this->at(1))
+            ->method('render')
+            ->with($template->getHtmlBody(), $expectedParameters)
+            ->will($this->returnValue($template->getHtmlBody()));
+
+        // Third run is the text body
+        $engine
+            ->expects($this->at(2))
+            ->method('render')
+            ->with($template->getTextBody(), $expectedParameters)
+            ->will($this->returnValue($template->getTextBody()));
+
+        $this->repository
+            ->expects($this->once())
+            ->method('getByIdAndLocale')
+            ->with($templateId, $locale)
+            ->will($this->returnValue($template));
+
+        $this->engineManager
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($engine));
+
+        list ($subject, $html, $text) = $this->templateService->render($templateId, $locale, $parameters);
+
+        $this->assertEquals($template->getSubject(), $subject);
+        $this->assertEquals($template->getHtmlBody(), $html);
+        $this->assertEquals($template->getTextBody(), $text);
+    }
 }
