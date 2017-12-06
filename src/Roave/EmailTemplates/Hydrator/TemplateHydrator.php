@@ -41,7 +41,7 @@
 namespace Roave\EmailTemplates\Hydrator;
 
 use Roave\EmailTemplates\Entity\TemplateEntity;
-use Zend\Stdlib\Hydrator\AbstractHydrator;
+use Zend\Hydrator\AbstractHydrator;
 
 class TemplateHydrator extends AbstractHydrator
 {

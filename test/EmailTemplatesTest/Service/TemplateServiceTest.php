@@ -110,12 +110,12 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->objectManager = $this->getMock(ObjectManager::class);
-        $this->repository    = $this->getMock(TemplateRepositoryInterface::class);
-        $this->inputFilter   = $this->getMock(TemplateInputFilter::class);
-        $this->hydrator      = $this->getMock(TemplateHydrator::class);
-        $this->engineManager = $this->getMock(EnginePluginManager::class);
-        $this->eventManager  = $this->getMock(EventManagerInterface::class);
+        $this->objectManager = $this->createMock(ObjectManager::class);
+        $this->repository    = $this->createMock(TemplateRepositoryInterface::class);
+        $this->inputFilter   = $this->createMock(TemplateInputFilter::class);
+        $this->hydrator      = $this->createMock(TemplateHydrator::class);
+        $this->engineManager = $this->createMock(EnginePluginManager::class);
+        $this->eventManager  = $this->createMock(EventManagerInterface::class);
         $this->options       = new TemplateServiceOptions();
 
         $this->templateService = new TemplateService(
@@ -144,7 +144,7 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
         $template->setTextBody('text');
         $template->setHtmlBody('html');
 
-        $engine = $this->getMock(EngineInterface::class);
+        $engine = $this->createMock(EngineInterface::class);
 
         // First run is the subject
         $engine
@@ -212,7 +212,7 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
         $template->setTextBody(sprintf($this->options->getDefaultBody(), $templateId, $locale));
         $template->setHtmlBody(sprintf($this->options->getDefaultBody(), $templateId, $locale));
 
-        $engine = $this->getMock(EngineInterface::class);
+        $engine = $this->createMock(EngineInterface::class);
 
         // First run is the subject
         $engine
@@ -291,7 +291,7 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
     public function testUpdate()
     {
         $data     = ['foo' => 'bar'];
-        $template = $this->getMock(TemplateEntity::class);
+        $template = $this->createMock(TemplateEntity::class);
         $template
             ->expects($this->once())
             ->method('setUpdatedAt')
@@ -342,7 +342,7 @@ class TemplateServiceTest extends PHPUnit_Framework_TestCase
         $template->setTextBody(sprintf($this->options->getDefaultBody(), $templateId, $locale));
         $template->setHtmlBody(sprintf($this->options->getDefaultBody(), $templateId, $locale));
 
-        $engine = $this->getMock(EngineInterface::class);
+        $engine = $this->createMock(EngineInterface::class);
 
         // First run is the subject
         $engine

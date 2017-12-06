@@ -163,7 +163,7 @@ class TemplateHydratorTest extends PHPUnit_Framework_TestCase
     {
         $data = $this->getExtractedData();
 
-        $template = $this->getMock(TemplateEntity::class);
+        $template = $this->createMock(TemplateEntity::class);
 
         $expectedProperties = [
             'setSubject'             => 'subject',

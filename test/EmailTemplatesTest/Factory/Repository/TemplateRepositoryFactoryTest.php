@@ -72,16 +72,16 @@ class TemplateRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateService()
     {
-        $objectRepository = $this->getMock(ObjectRepository::class);
+        $objectRepository = $this->createMock(ObjectRepository::class);
 
-        $objectManager = $this->getMock(ObjectManager::class);
+        $objectManager = $this->createMock(ObjectManager::class);
         $objectManager
             ->expects($this->once())
             ->method('getRepository')
             ->with(TemplateEntity::class)
             ->will($this->returnValue($objectRepository));
 
-        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl = $this->createMock(ServiceLocatorInterface::class);
         $sl
             ->expects($this->once())
             ->method('get')

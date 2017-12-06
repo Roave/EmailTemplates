@@ -8,6 +8,7 @@
 
 namespace Roave\EmailTemplates\Factory\Service\Template\Listener;
 
+use Roave\EmailTemplates\Options\TemplateServiceOptions;
 use Roave\EmailTemplates\Repository\TemplateRepository;
 use Roave\EmailTemplates\Service\Template\Listener\UpdateTemplateParametersListener;
 use Roave\EmailTemplates\Service\TemplateService;
@@ -32,7 +33,8 @@ class UpdateTemplateParametersListenerFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new UpdateTemplateParametersListener(
-            $serviceLocator->get(TemplateRepository::class)
+            $serviceLocator->get(TemplateRepository::class),
+            $serviceLocator->get(TemplateServiceOptions::class)
         );
     }
 }

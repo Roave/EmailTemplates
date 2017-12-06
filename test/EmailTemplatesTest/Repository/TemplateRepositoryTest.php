@@ -72,7 +72,7 @@ class TemplateRepositoryTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->objectRepository = $this->getMock(ObjectRepository::class);
+        $this->objectRepository = $this->createMock(ObjectRepository::class);
 
         $this->templateRepo = new TemplateRepository(
             $this->objectRepository

@@ -43,6 +43,7 @@ namespace EmailTemplatesTest\Factory\Service\Template\Listener;
 
 use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\Factory\Service\Template\Listener\UpdateTemplateParametersListenerFactory;
+use Roave\EmailTemplates\Options\TemplateServiceOptions;
 use Roave\EmailTemplates\Repository\TemplateRepository;
 use Roave\EmailTemplates\Repository\TemplateRepositoryInterface;
 use Roave\EmailTemplates\Service\Template\Listener\UpdateTemplateParametersListener;
@@ -73,12 +74,18 @@ class UpdateTemplateParametersListenerFactoryTest extends PHPUnit_Framework_Test
      */
     public function testCreateService()
     {
-        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl = $this->createMock(ServiceLocatorInterface::class);
         $sl
             ->expects($this->at(0))
             ->method('get')
             ->with(TemplateRepository::class)
-            ->will($this->returnValue($this->getMock(TemplateRepositoryInterface::class)));
+            ->will($this->returnValue($this->createMock(TemplateRepositoryInterface::class)));
+
+        $sl
+            ->expects($this->at(1))
+            ->method('get')
+            ->with(TemplateServiceOptions::class)
+            ->will($this->returnValue($this->createMock(TemplateServiceOptions::class)));
 
         $this->assertInstanceOf(UpdateTemplateParametersListener::class, $this->factory->createService($sl));
     }

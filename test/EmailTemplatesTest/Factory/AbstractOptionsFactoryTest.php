@@ -68,7 +68,7 @@ class AbstractOptionsFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->sl      = $this->getMock(ServiceLocatorInterface::class);
+        $this->sl      = $this->createMock(ServiceLocatorInterface::class);
         $this->factory = new AbstractOptionsFactory();
     }
 
@@ -120,7 +120,7 @@ class AbstractOptionsFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl = $this->createMock(ServiceLocatorInterface::class);
         $sl
             ->expects($this->any())
             ->method('get')

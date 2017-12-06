@@ -32,15 +32,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
 namespace Roave\EmailTemplates\Service\Template\Listener;
 
 use Roave\EmailTemplates\Entity\TemplateEntity;
+use Roave\EmailTemplates\Options\TemplateServiceOptions;
 use Roave\EmailTemplates\Repository\TemplateRepositoryInterface;
 use Roave\EmailTemplates\Service\TemplateService;
 use Roave\EmailTemplates\Service\TemplateServiceInterface;
@@ -57,12 +58,18 @@ class UpdateTemplateParametersListener implements ListenerAggregateInterface
      * @var TemplateRepositoryInterface
      */
     private $templateRepository;
+    /**
+     * @var TemplateServiceOptions
+     */
+    private $options;
 
     /**
      * @param TemplateRepositoryInterface $templateRepository
+     * @param TemplateServiceOptions      $options
      */
-    public function __construct(TemplateRepositoryInterface $templateRepository)
+    public function __construct(TemplateRepositoryInterface $templateRepository, TemplateServiceOptions $options)
     {
+        $this->options            = $options;
         $this->templateRepository = $templateRepository;
     }
 
@@ -87,15 +94,15 @@ class UpdateTemplateParametersListener implements ListenerAggregateInterface
     public function update(Event $event)
     {
         /**
-         * @var TemplateEntity $template
-         * @var array|\Traversable $parameters
+         * @var TemplateEntity           $template
+         * @var array|\Traversable       $parameters
          * @var TemplateServiceInterface $templateService
          */
         $service    = $event->getTarget();
         $template   = $event->getParam('template');
         $parameters = $event->getParam('parameters');
 
-        if (! $template->getUpdateParameters()) {
+        if (!$template->getUpdateParameters() && !$this->options->isAlwaysUpdateParameters()) {
             return;
         }
 

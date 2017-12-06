@@ -83,7 +83,7 @@ class EnginePluginManagerFactoryTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl = $this->createMock(ServiceLocatorInterface::class);
         $sl
             ->expects($this->once())
             ->method('get')

@@ -44,7 +44,7 @@ class EmailServiceTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->options         = new EmailServiceOptions();
-        $this->templateService = $this->getMock(TemplateServiceInterface::class);
+        $this->templateService = $this->createMock(TemplateServiceInterface::class);
 
         $this->service = new EmailService(
             $this->templateService,
@@ -65,7 +65,7 @@ class EmailServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testSetTransport()
     {
-        $this->service->setTransport($this->getMock(TransportInterface::class));
+        $this->service->setTransport($this->createMock(TransportInterface::class));
     }
 
     /**
@@ -77,7 +77,7 @@ class EmailServiceTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf($this->options->getDefaultTransport(), $transport);
 
-        $transport = $this->getMock(TransportInterface::class);
+        $transport = $this->createMock(TransportInterface::class);
         $this->service->setTransport($transport);
 
         $this->assertSame($transport, $this->service->getTransport());
@@ -95,7 +95,7 @@ class EmailServiceTest extends PHPUnit_Framework_TestCase
 
         $this->mockRender();
 
-        $transport = $this->getMock(TransportInterface::class);
+        $transport = $this->createMock(TransportInterface::class);
         $transport
             ->expects($this->once())
             ->method('send')
@@ -117,7 +117,7 @@ class EmailServiceTest extends PHPUnit_Framework_TestCase
 
         $this->mockRender();
 
-        $transport = $this->getMock(TransportInterface::class);
+        $transport = $this->createMock(TransportInterface::class);
         $transport
             ->expects($this->once())
             ->method('send')

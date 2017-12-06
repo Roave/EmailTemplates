@@ -75,10 +75,10 @@ class EmailServiceFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateService()
     {
-        $transport = $this->getMock(TransportInterface::class);
-        $template = $this->getMock(TemplateServiceInterface::class);
+        $transport = $this->createMock(TransportInterface::class);
+        $template = $this->createMock(TemplateServiceInterface::class);
 
-        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl = $this->createMock(ServiceLocatorInterface::class);
         $sl
             ->expects($this->at(0))
             ->method('get')

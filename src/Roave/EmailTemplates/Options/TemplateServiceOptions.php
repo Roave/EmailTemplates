@@ -61,6 +61,11 @@ class TemplateServiceOptions extends AbstractOptions
     protected $engine = 'twig';
 
     /**
+     * @var bool
+     */
+    protected $alwaysUpdateParameters = false;
+
+    /**
      * Default subject set on all template on initial creation
      *
      * @var string
@@ -82,17 +87,33 @@ class TemplateServiceOptions extends AbstractOptions
     protected $predefinedParams = [];
 
     /**
+     * @return bool
+     */
+    public function isAlwaysUpdateParameters(): bool
+    {
+        return $this->alwaysUpdateParameters;
+    }
+
+    /**
+     * @param bool $alwaysUpdateParameters
+     */
+    public function setAlwaysUpdateParameters(bool $alwaysUpdateParameters): void
+    {
+        $this->alwaysUpdateParameters = $alwaysUpdateParameters;
+    }
+
+    /**
      * @param string $defaultBody
      */
-    public function setDefaultBody($defaultBody)
+    public function setDefaultBody(string $defaultBody): void
     {
-        $this->defaultBody = (string) $defaultBody;
+        $this->defaultBody = $defaultBody;
     }
 
     /**
      * @return string
      */
-    public function getDefaultBody()
+    public function getDefaultBody(): string
     {
         return $this->defaultBody;
     }
@@ -100,15 +121,15 @@ class TemplateServiceOptions extends AbstractOptions
     /**
      * @param string $defaultSubject
      */
-    public function setDefaultSubject($defaultSubject)
+    public function setDefaultSubject(string $defaultSubject): void
     {
-        $this->defaultSubject = (string) $defaultSubject;
+        $this->defaultSubject = $defaultSubject;
     }
 
     /**
      * @return string
      */
-    public function getDefaultSubject()
+    public function getDefaultSubject(): string
     {
         return $this->defaultSubject;
     }
@@ -116,15 +137,15 @@ class TemplateServiceOptions extends AbstractOptions
     /**
      * @param string $engine
      */
-    public function setEngine($engine)
+    public function setEngine(string $engine): void
     {
-        $this->engine = (string) $engine;
+        $this->engine = $engine;
     }
 
     /**
      * @return string
      */
-    public function getEngine()
+    public function getEngine(): string
     {
         return $this->engine;
     }
@@ -132,7 +153,7 @@ class TemplateServiceOptions extends AbstractOptions
     /**
      * @param array $predefinedParams
      */
-    public function setPredefinedParams(array $predefinedParams)
+    public function setPredefinedParams(array $predefinedParams): void
     {
         $this->predefinedParams = $predefinedParams;
     }
@@ -140,7 +161,7 @@ class TemplateServiceOptions extends AbstractOptions
     /**
      * @return array
      */
-    public function getPredefinedParams()
+    public function getPredefinedParams(): array
     {
         return $this->predefinedParams;
     }

@@ -72,14 +72,14 @@ class TwigEngineFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateService()
     {
-        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl = $this->createMock(ServiceLocatorInterface::class);
         $sl
             ->expects($this->once())
             ->method('get')
             ->with(TwigOptions::class)
             ->will($this->returnValue(new TwigOptions()));
 
-        $engine = $this->getMock(EnginePluginManager::class);
+        $engine = $this->createMock(EnginePluginManager::class);
         $engine
             ->expects($this->once())
             ->method('getServiceLocator')

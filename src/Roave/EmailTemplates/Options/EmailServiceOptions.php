@@ -90,15 +90,15 @@ class EmailServiceOptions extends AbstractOptions
     /**
      * @param string $defaultLocale
      */
-    public function setDefaultLocale($defaultLocale)
+    public function setDefaultLocale(string $defaultLocale)
     {
-        $this->defaultLocale = (string) $defaultLocale;
+        $this->defaultLocale = $defaultLocale;
     }
 
     /**
      * @return string
      */
-    public function getDefaultLocale()
+    public function getDefaultLocale(): string
     {
         return $this->defaultLocale;
     }
@@ -106,7 +106,7 @@ class EmailServiceOptions extends AbstractOptions
     /**
      * @param array $bcc
      */
-    public function setBcc(array $bcc)
+    public function setBcc(array $bcc): void
     {
         $this->bcc = $bcc;
     }
@@ -114,7 +114,7 @@ class EmailServiceOptions extends AbstractOptions
     /**
      * @return array
      */
-    public function getBcc()
+    public function getBcc(): array
     {
         return $this->bcc;
     }
@@ -122,15 +122,15 @@ class EmailServiceOptions extends AbstractOptions
     /**
      * @param string $defaultTransport
      */
-    public function setDefaultTransport($defaultTransport)
+    public function setDefaultTransport(string $defaultTransport): void
     {
-        $this->defaultTransport = (string) $defaultTransport;
+        $this->defaultTransport = $defaultTransport;
     }
 
     /**
      * @return string
      */
-    public function getDefaultTransport()
+    public function getDefaultTransport(): string
     {
         return $this->defaultTransport;
     }
@@ -138,15 +138,15 @@ class EmailServiceOptions extends AbstractOptions
     /**
      * @param $encoding
      */
-    public function setEncoding($encoding)
+    public function setEncoding(string $encoding): void
     {
-        $this->encoding = (string) $encoding;
+        $this->encoding = $encoding;
     }
 
     /**
      * @return string
      */
-    public function getEncoding()
+    public function getEncoding(): string
     {
         return $this->encoding;
     }
@@ -154,31 +154,31 @@ class EmailServiceOptions extends AbstractOptions
     /**
      * @param $from
      */
-    public function setFrom($from)
+    public function setFrom(string $from): void
     {
-        $this->from = (string) $from;
+        $this->from = $from;
     }
 
     /**
      * @return string
      */
-    public function getFrom()
+    public function getFrom(): string
     {
         return $this->from;
     }
 
     /**
-     * @param $replyTo
+     * @param string $replyTo
      */
-    public function setReplyTo($replyTo)
+    public function setReplyTo(string $replyTo): void
     {
-        $this->replyTo = (string) $replyTo;
+        $this->replyTo = $replyTo;
     }
 
     /**
      * @return string
      */
-    public function getReplyTo()
+    public function getReplyTo(): string
     {
         return $this->replyTo;
     }

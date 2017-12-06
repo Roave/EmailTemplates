@@ -43,6 +43,7 @@ namespace EmailTemplatesTest\Service\Template\Listener;
 
 use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\Entity\TemplateEntity;
+use Roave\EmailTemplates\Options\TemplateServiceOptions;
 use Roave\EmailTemplates\Repository\TemplateRepositoryInterface;
 use Roave\EmailTemplates\Service\Template\Listener\UpdateTemplateParametersListener;
 use Roave\EmailTemplates\Service\TemplateService;
@@ -66,6 +67,11 @@ class UpdateTemplateParametersListenerTest extends PHPUnit_Framework_TestCase
     protected $templateRepository;
 
     /**
+     * @var TemplateServiceOptions
+     */
+    protected $options;
+
+    /**
      * @var UpdateTemplateParametersListener
      */
     protected $template;
@@ -75,9 +81,10 @@ class UpdateTemplateParametersListenerTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->templateRepository = $this->getMock(TemplateRepositoryInterface::class);
+        $this->options            = new TemplateServiceOptions();
+        $this->templateRepository = $this->createMock(TemplateRepositoryInterface::class);
 
-        $this->template = new UpdateTemplateParametersListener($this->templateRepository);
+        $this->template = new UpdateTemplateParametersListener($this->templateRepository, $this->options);
     }
 
     /**
@@ -85,7 +92,7 @@ class UpdateTemplateParametersListenerTest extends PHPUnit_Framework_TestCase
      */
     public function testAttach()
     {
-        $events = $this->getMock(EventManagerInterface::class);
+        $events = $this->createMock(EventManagerInterface::class);
         $events
             ->expects($this->once())
             ->method('attach')
@@ -103,8 +110,8 @@ class UpdateTemplateParametersListenerTest extends PHPUnit_Framework_TestCase
         $template->setId(1337);
         $template->setUpdateParameters(false);
 
-        $service = $this->getMock(templateServiceInterface::class);
-        $event = new Event(TemplateService::EVENT_RENDER, $service, ['template' => $template, 'parameters' => []]);
+        $service = $this->createMock(TemplateServiceInterface::class);
+        $event   = new Event(TemplateService::EVENT_RENDER, $service, ['template' => $template, 'parameters' => []]);
 
         $this->template->update($event);
     }
@@ -118,7 +125,7 @@ class UpdateTemplateParametersListenerTest extends PHPUnit_Framework_TestCase
         $template->setId(1337);
         $template->setUpdateParameters(true);
 
-        $service = $this->getMock(templateServiceInterface::class);
+        $service = $this->createMock(TemplateServiceInterface::class);
         $service
             ->expects($this->once())
             ->method('update')

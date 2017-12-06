@@ -47,7 +47,7 @@ class EnginePluginManagerTest extends PHPUnit_Framework_TestCase
      */
     public function testValidatePlugin()
     {
-        $plugin = $this->getMock(EngineInterface::class);
+        $plugin = $this->createMock(EngineInterface::class);
         $this->manager->validatePlugin($plugin);
     }
 }

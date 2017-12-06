@@ -81,28 +81,28 @@ class TemplateServiceFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateService()
     {
-        $templateRepository = $this->getMock(TemplateRepositoryInterface::class);
+        $templateRepository = $this->createMock(TemplateRepositoryInterface::class);
 
-        $inputFilterManager = $this->getMock(InputFilterPluginManager::class);
+        $inputFilterManager = $this->createMock(InputFilterPluginManager::class);
         $inputFilterManager
             ->expects($this->once())
             ->method('get')
             ->with(TemplateInputFilter::class)
-            ->will($this->returnValue($this->getMock(TemplateInputFilter::class)));
+            ->will($this->returnValue($this->createMock(TemplateInputFilter::class)));
 
-        $hydratorManager = $this->getMock(HydratorPluginManager::class);
+        $hydratorManager = $this->createMock(HydratorPluginManager::class);
         $hydratorManager
             ->expects($this->once())
             ->method('get')
             ->with(TemplateHydrator::class)
-            ->will($this->returnValue($this->getMock(TemplateHydrator::class)));
+            ->will($this->returnValue($this->createMock(TemplateHydrator::class)));
 
-        $sl = $this->getMock(ServiceLocatorInterface::class);
+        $sl = $this->createMock(ServiceLocatorInterface::class);
         $sl
             ->expects($this->at(0))
             ->method('get')
             ->with('Roave\EmailTemplates\ObjectManager')
-            ->will($this->returnValue($this->getMock(ObjectManager::class)));
+            ->will($this->returnValue($this->createMock(ObjectManager::class)));
 
         $sl
             ->expects($this->at(1))
@@ -126,19 +126,19 @@ class TemplateServiceFactoryTest extends PHPUnit_Framework_TestCase
             ->expects($this->at(4))
             ->method('get')
             ->with(EnginePluginManager::class)
-            ->will($this->returnValue($this->getMock(EnginePluginManager::class)));
+            ->will($this->returnValue($this->createMock(EnginePluginManager::class)));
 
         $sl
             ->expects($this->at(5))
             ->method('get')
             ->with(TemplateServiceOptions::class)
-            ->will($this->returnValue($this->getMock(TemplateServiceOptions::class)));
+            ->will($this->returnValue($this->createMock(TemplateServiceOptions::class)));
 
         $sl
             ->expects($this->at(6))
             ->method('get')
             ->with(UpdateTemplateParametersListener::class)
-            ->will($this->returnValue($this->getMock(ListenerAggregateInterface::class)));
+            ->will($this->returnValue($this->createMock(ListenerAggregateInterface::class)));
 
         $service = $this->factory->createService($sl);
 
