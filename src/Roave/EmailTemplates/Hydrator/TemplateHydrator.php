@@ -104,7 +104,8 @@ class TemplateHydrator extends AbstractHydrator
         $object->setTextBody($this->hydrateValue('textBody', $data['textBody']));
         $object->setHtmlBody($this->hydrateValue('htmlBody', $data['htmlBody']));
         $object->setDescription($this->hydrateValue('description', $data['description']));
-        $object->setUpdateParameters($this->hydrateValue('updatedParameters', $data['updateParameters']));
+        $object->setParameters($this->hydrateValue('parameters', $data['parameters']));
+        $object->setUpdateParameters($this->hydrateValue('updateParameters', $data['updateParameters']));
 
         return $object;
     }

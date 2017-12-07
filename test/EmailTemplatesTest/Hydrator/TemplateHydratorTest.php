@@ -32,10 +32,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
 namespace EmailTemplatesTest\Hydrator;
@@ -95,6 +95,7 @@ class TemplateHydratorTest extends PHPUnit_Framework_TestCase
 
     /**
      * Helper for setting properties for a template
+     *
      * @return TemplateEntity
      */
     private function getTemplate()
@@ -129,19 +130,19 @@ class TemplateHydratorTest extends PHPUnit_Framework_TestCase
         $dateTime = new DateTime('2011-01-01');
 
         return [
-            'id'                  => 1,
-            'uuid'                => '123',
-            'locale'              => 'uk-US',
-            'subject'             => '42',
-            'textBody'            => 'Body made of text',
-            'htmlBody'            => 'Body made of html',
-            'description'         => 'This describes everything',
-            'parameters'          => ['foo' => 'bar'],
-            'updateParameters'   => true,
+            'id'               => 1,
+            'uuid'             => '123',
+            'locale'           => 'uk-US',
+            'subject'          => '42',
+            'textBody'         => 'Body made of text',
+            'htmlBody'         => 'Body made of html',
+            'description'      => 'This describes everything',
+            'parameters'       => ['foo' => 'bar'],
+            'updateParameters' => true,
 
             'createdAt'           => $dateTime,
             'updatedAt'           => $dateTime,
-            'parametersUpdatedAt' => $dateTime
+            'parametersUpdatedAt' => $dateTime,
         ];
     }
 
@@ -166,11 +167,12 @@ class TemplateHydratorTest extends PHPUnit_Framework_TestCase
         $template = $this->createMock(TemplateEntity::class);
 
         $expectedProperties = [
-            'setSubject'             => 'subject',
-            'setTextBody'            => 'textBody',
-            'setHtmlBody'            => 'htmlBody',
-            'setDescription'         => 'description',
-            'setUpdateParameters'    => 'updateParameters',
+            'setSubject'          => 'subject',
+            'setTextBody'         => 'textBody',
+            'setHtmlBody'         => 'htmlBody',
+            'setDescription'      => 'description',
+            'setParameters'       => 'parameters',
+            'setUpdateParameters' => 'updateParameters',
         ];
 
         foreach ($expectedProperties as $method => $property) {
