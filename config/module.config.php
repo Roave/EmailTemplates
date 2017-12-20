@@ -48,6 +48,7 @@ use Roave\EmailTemplates\Factory\Service\Template\EnginePluginManagerFactory;
 use Roave\EmailTemplates\Factory\Service\Template\Listener\UpdateTemplateParametersListenerFactory;
 use Roave\EmailTemplates\Factory\Service\TemplateServiceFactory;
 use Roave\EmailTemplates\Factory\Service\TransportFactory;
+use Roave\EmailTemplates\Factory\Validator\CanRenderValidatorFactory;
 use Roave\EmailTemplates\Hydrator\TemplateHydrator;
 use Roave\EmailTemplates\InputFilter\TemplateInputFilter;
 use Roave\EmailTemplates\Options\EmailServiceOptions;
@@ -59,6 +60,7 @@ use Roave\EmailTemplates\Service\Template\Engine\Twig;
 use Roave\EmailTemplates\Service\Template\EnginePluginManager;
 use Roave\EmailTemplates\Service\Template\Listener\UpdateTemplateParametersListener;
 use Roave\EmailTemplates\Service\TemplateService;
+use Roave\EmailTemplates\Validator\CanRenderValidator;
 use Zend\Mail\Transport\TransportInterface;
 
 return [
@@ -127,6 +129,12 @@ return [
     'input_filters' => [
         'invokables' => [
             TemplateInputFilter::class => TemplateInputFilter::class
+        ]
+    ],
+
+    'validators' => [
+        'factories' => [
+            CanRenderValidator::class => CanRenderValidatorFactory::class,
         ]
     ],
 

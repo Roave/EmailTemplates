@@ -32,14 +32,15 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Antoine Hedgecock
+ * @author    Antoine Hedgecock
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
 namespace Roave\EmailTemplates\InputFilter;
 
+use Roave\EmailTemplates\Validator\CanRenderValidator;
 use Zend\Filter\Boolean;
 use Zend\Filter\StringTrim;
 use Zend\InputFilter\InputFilter;
@@ -55,71 +56,59 @@ class TemplateInputFilter extends InputFilter
                 [
                     'name'    => NotEmpty::class,
                     'options' => [
-                        'type' => NotEmpty::ALL & ~NotEmpty::BOOLEAN
-                    ]
-                ]
+                        'type' => NotEmpty::ALL & ~NotEmpty::BOOLEAN,
+                    ],
+                ],
             ],
+
             'filters' => [
-                [
-                    'name' => Boolean::class
-                ]
-            ]
+                ['name' => Boolean::class],
+            ],
         ]);
 
         $this->add([
-            'name'       => 'parameters',
+            'name' => 'parameters',
         ]);
 
         $this->add([
             'name'       => 'subject',
             'validators' => [
-
+                ['name' => CanRenderValidator::class],
             ],
+
             'filters' => [
-                [
-                    'name' => StringTrim::class
-                ]
-            ]
+                ['name' => StringTrim::class],
+            ],
         ]);
 
         $this->add([
             'name'       => 'textBody',
             'validators' => [
-
+                ['name' => CanRenderValidator::class],
             ],
 
             'filters' => [
-                [
-                    'name' => StringTrim::class
-                ]
-            ]
+                ['name' => StringTrim::class],
+            ],
         ]);
 
         $this->add([
             'name'       => 'htmlBody',
             'validators' => [
-
+                ['name' => CanRenderValidator::class],
             ],
 
             'filters' => [
-                [
-                    'name' => StringTrim::class
-                ]
-            ]
+                ['name' => StringTrim::class],
+            ],
         ]);
 
         $this->add([
             'name'        => 'description',
             'allow_empty' => true,
-            'validators'  => [
-
+            'filters'     => [
+                ['name' => StringTrim::class],
             ],
-
-            'filters' => [
-                [
-                    'name' => StringTrim::class
-                ]
-            ]
         ]);
     }
 }
