@@ -49,8 +49,9 @@ interface EmailServiceInterface
      * @param string             $templateId The template id to use.
      * @param array|\Traversable $params     A list of traversable parameters.
      * @param null               $locale     Which locale to send the email in.
+     * @param null               $replyTo    Override reply-to header
      *
      * @return void
      */
-    public function send($email, $templateId, $params = [], $locale = null);
+    public function send($email, $templateId, $params = [], $locale = null, $replyTo = null);
 }
