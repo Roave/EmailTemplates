@@ -93,7 +93,6 @@ class EmailService implements EmailServiceInterface
     public function getTransport()
     {
         if ($this->transport === null) {
-
             $className = $this->options->getDefaultTransport();
             $this->transport = new $className;
         }

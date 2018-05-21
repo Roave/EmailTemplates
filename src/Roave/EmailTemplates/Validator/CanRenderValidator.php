@@ -2,7 +2,6 @@
 /**
  * @copyright Interactive Solutions
  */
-
 declare(strict_types=1);
 
 namespace Roave\EmailTemplates\Validator;
@@ -38,7 +37,6 @@ final class CanRenderValidator extends AbstractValidator
         try {
             $this->engine->render($value, $context['parameters'] ?? []);
         } catch (\Throwable $e) {
-
             $this->error(self::RENDERING_FAILED, $e->getMessage());
 
             return false;

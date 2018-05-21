@@ -2,7 +2,6 @@
 /**
  * @copyright Interactive Solutions
  */
-
 declare(strict_types=1);
 
 namespace Roave\EmailTemplates\Factory\Validator;
