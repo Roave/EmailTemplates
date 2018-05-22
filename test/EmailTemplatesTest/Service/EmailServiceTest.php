@@ -55,7 +55,7 @@ class EmailServiceTest extends PHPUnit_Framework_TestCase
     private function mockRender()
     {
         $this->templateService
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('render')
             ->willReturn(['subject', 'html', 'text']);
     }
@@ -131,5 +131,40 @@ class EmailServiceTest extends PHPUnit_Framework_TestCase
         $this->service->send($email, $templateId, $parameters, $locale);
     }
 
+    /**
+     * @covers ::send
+     */
+    public function testSendCanOverrideReplyToHeader()
+    {
+        $email      = 'jonas.eriksson@interactivesolutions.se';
+        $locale     = 'sv_SE';
+        $templateId = 'roave:contact';
+        $parameters = ['name' => 'Hotas'];
+        $replyTo    = 'jonas.eriksson@interactivesolutions.se';
 
+        $this->mockRender();
+
+        $transport = $this->createMock(TransportInterface::class);
+        $transport
+            ->expects($this->at(0))
+            ->method('send')
+            ->with($this->isInstanceOf(Message::class))
+            ->will($this->returnCallback(function(Message $message) {
+                $replyToField = $message->getHeaders()->get('Reply-To');
+                $this->assertContains($this->options->getReplyTo(), $replyToField->getFieldValue());
+            }));
+
+        $transport
+            ->expects($this->at(1))
+            ->method('send')
+            ->with($this->isInstanceOf(Message::class))
+            ->will($this->returnCallback(function(Message $message) use ($replyTo) {
+                $replyToField = $message->getHeaders()->get('Reply-To');
+                $this->assertContains($replyTo, $replyToField->getFieldValue());
+            }));
+
+        $this->service->setTransport($transport);
+        $this->service->send($email, $templateId, $parameters, $locale, null);
+        $this->service->send($email, $templateId, $parameters, $locale, $replyTo);
+    }
 }

@@ -43,6 +43,8 @@ namespace EmailTemplatesTest\InputFilter;
 
 use PHPUnit_Framework_TestCase;
 use Roave\EmailTemplates\InputFilter\TemplateInputFilter;
+use Roave\EmailTemplates\Service\Template\Engine\EngineInterface;
+use Roave\EmailTemplates\Validator\CanRenderValidator;
 use Zend\Validator\NotEmpty;
 
 /**
@@ -65,7 +67,15 @@ class TemplateInputFilterTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $canRenderValidator = new CanRenderValidator($this->createMock(EngineInterface::class));
         $this->inputFilter = new TemplateInputFilter();
+
+        $this->inputFilter
+            ->getFactory()
+            ->getDefaultValidatorChain()
+            ->getPluginManager()
+            ->setService(CanRenderValidator::class, $canRenderValidator);
+
         $this->inputFilter->init();
     }
 

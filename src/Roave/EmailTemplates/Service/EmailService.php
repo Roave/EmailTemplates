@@ -93,7 +93,6 @@ class EmailService implements EmailServiceInterface
     public function getTransport()
     {
         if ($this->transport === null) {
-
             $className = $this->options->getDefaultTransport();
             $this->transport = new $className;
         }
@@ -101,10 +100,11 @@ class EmailService implements EmailServiceInterface
         return $this->transport;
     }
 
-    public function send($email, $templateId, $params = [], $locale = null)
+    public function send($email, $templateId, $params = [], $locale = null, $replyTo = null)
     {
         $params = ArrayUtils::iteratorToArray($params);
         $locale = $locale ?: $this->options->getDefaultLocale();
+        $replyTo = $replyTo ?: $this->options->getReplyTo();
 
         list ($subject, $html, $text) = $this->templates->render($templateId, $locale, $params);
 
@@ -122,7 +122,7 @@ class EmailService implements EmailServiceInterface
         $message->setBody($body);
 
         $message->setSubject($subject);
-        $message->setReplyTo($this->options->getReplyTo());
+        $message->setReplyTo($replyTo);
         $message->setFrom($this->options->getFrom());
         $message->setTo($email);
         $message->setBcc($this->options->getBcc());
